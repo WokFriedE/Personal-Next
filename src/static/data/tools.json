@@ -1,0 +1,37 @@
+[
+    {
+        "name": "GitHub",
+        "proficiency": 8,
+        "description": "Used for version control in most projects"
+    },
+    {
+        "name": "Visual Studio Code",
+        "proficiency": 8,
+        "description": "IDE used for prototyping"
+    },
+    {
+        "name": "Google Suite",
+        "proficiency": 8,
+        "description": "Used for capibilities such as Google Sheets, Docs, Drive, and so on"
+    },
+    {
+        "name": "Excel",
+        "proficiency": 8,
+        "description": "Experience with formulas and data processing"
+    },
+    {
+        "name": "Google Suite",
+        "proficiency": 8,
+        "description": "IDE used for prototyping"
+    },
+    {
+        "name": "Android Studio",
+        "proficiency": 7,
+        "description": "Android"
+    },
+    {
+        "name": "Ubuntu",
+        "proficiency": 7,
+        "description": "Linux Distro"
+    }
+]

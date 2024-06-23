@@ -1,0 +1,77 @@
+[
+    {
+        "name": "C",
+        "proficiency": 6,
+        "type": "language"
+    },
+    {
+        "name": "Python",
+        "proficiency": 8,
+        "type": "language"
+    },
+    {
+        "name": "React JS",
+        "proficiency": 6,
+        "type": "framework"
+    },
+    {
+        "name": "SQL",
+        "proficiency": 6,
+        "type": "language"
+    },
+    {
+        "name": "Vue",
+        "proficiency": 5,
+        "type": "framework"
+    },
+    {
+        "name": "JavaScript",
+        "proficiency": 6,
+        "type": "language"
+    },
+    {
+        "name": "HTML 5",
+        "proficiency": 7,
+        "type": "language"
+    },
+    {
+        "name": "CSS",
+        "proficiency": 6,
+        "type": "language"
+    },
+    {
+        "name": "Java",
+        "proficiency": 5,
+        "type": "language"
+    },
+    {
+        "name": "Bootstrap",
+        "proficiency": 4,
+        "type": "library"
+    },
+    {
+        "name": "Tailwind",
+        "proficiency": 4,
+        "type": "library"
+    },
+    {
+        "name": "Material UI",
+        "proficiency": 4,
+        "type": "library"
+    },
+    {
+        "name": "Kotlin",
+        "proficiency": 4,
+        "type": "Language"
+    },
+    {
+        "name": "PHP",
+        "proficiency": 6,
+        "type": "Language"
+    },
+    {
+        "name": "SvelteKit 4",
+        "proficiency": 7,
+        "type": "Language"
+    }
+]
