@@ -1,35 +1,46 @@
 [
     {
-        "name": "Communication"
+        "name": "Communication",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Leadership"
+        "name": "Leadership",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Organization"
+        "name": "Organization",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Planning"
+        "name": "Planning",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Flexibility"
+        "name": "Flexibility",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Adaptability"
+        "name": "Adaptability",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Teamwork"
+        "name": "Teamwork",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Critical Thinking"
+        "name": "Critical Thinking",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Problem Solving"
+        "name": "Problem Solving",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Professionalism"
+        "name": "Professionalism",
+        "icon": "ion:people-sharp"
     },
     {
-        "name": "Curious"
+        "name": "Curious",
+        "icon": "ion:people-sharp"
     }
 ]
