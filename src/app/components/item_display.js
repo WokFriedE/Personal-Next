@@ -11,10 +11,10 @@ export default function DisplayContainer(props) {
                 <Icon icon={props.icon} className="text-4xl my-1" />}
             <h4 className="md:text-2xl sm:text-xl text-sm pb-2 text-center capitalize ">{props.title}</h4>
             <div className="flex flex-wrap items-center justify-center">
-                {props.item.map((item) => (<div className="flex flex-initial sm:my-2 px-4 rounded-full border-2 border-neutral-700 m-1 items-center gap-x-1">
+                {props.item.map((item) => (<div key={item.name} className="flex flex-initial sm:my-2 px-4 rounded-full border-2 border-neutral-700 m-1 items-center gap-x-1">
                     {item.icon &&
                         <Icon icon={item.icon} />}
-                    <p p className="text-center">
+                    <p className="text-center">
                         {item.name}
                     </p>
                 </div>
