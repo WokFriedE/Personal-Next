@@ -84,7 +84,7 @@
         "icon": "vscode-icons:file-type-php3"
     },
     {
-        "name": "SvelteKit 4",
+        "name": "SvelteKit",
         "proficiency": 7,
         "type": "Language",
         "icon": "vscode-icons:file-type-svelte"
