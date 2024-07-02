@@ -74,19 +74,19 @@
     {
         "name": "Kotlin",
         "proficiency": 4,
-        "type": "Language",
+        "type": "language",
         "icon": "vscode-icons:file-type-kotlin"
     },
     {
         "name": "PHP",
         "proficiency": 6,
-        "type": "Language",
+        "type": "language",
         "icon": "vscode-icons:file-type-php3"
     },
     {
         "name": "SvelteKit",
         "proficiency": 7,
-        "type": "Language",
+        "type": "language",
         "icon": "vscode-icons:file-type-svelte"
     }
 ]

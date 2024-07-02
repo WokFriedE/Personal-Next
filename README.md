@@ -46,4 +46,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Technologies used
 
 -   NextJS
--   SQLite
+-   SQLite + sqlite3

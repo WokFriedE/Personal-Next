@@ -1,9 +1,10 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import languagesJSON from "../static/data/languages.json";
 import skillsJSON from "../static/data/skills.json";
 import toolsJSON from "../static/data/tools.json";
 import extracurricularJSON from "../static/data/manual/extracurricular.json";
-
 import ItemContainer from "./components/item_display";
 import Debugger from "./components/debug";
 
@@ -54,6 +55,8 @@ export default function Home() {
             {/* Extracurricular */}
             <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Extracurricular</h1>
             <div className="2xl:mx-32 sm:mx-12 mx-1 bg-slate-600/[.2] rounded-lg border-2 border-gray-500"></div>
+
+            <button onClick={() => handleClick()}> Run DB </button>
         </main>
     );
 }
