@@ -55,8 +55,6 @@ export default function Home() {
             {/* Extracurricular */}
             <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Extracurricular</h1>
             <div className="2xl:mx-32 sm:mx-12 mx-1 bg-slate-600/[.2] rounded-lg border-2 border-gray-500"></div>
-
-            <button onClick={() => handleClick()}> Run DB </button>
         </main>
     );
 }

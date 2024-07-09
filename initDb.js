@@ -75,7 +75,7 @@ db.serialize(() => {
                             start DATE,
                             end DATE,
                             description TEXT,
-                            extracurricular_id INTEGER,
+                            extracurricular_id INTEGER NOT NULL,
                             FOREIGN KEY (extracurricular_id) REFERENCES extracurricular(id) ON DELETE CASCADE,
                             UNIQUE (title, extracurricular_id)
                             )`,

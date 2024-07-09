@@ -42,11 +42,10 @@ export async function POST(req, res) {
                 JSON.stringify({ message: "failed: " + JSON.stringify(task) }, { headers: { "content-type": "application/json" }, status: 400 })
             );
         }
-        console.log(task);
         await db.run(
             "INSERT INTO tools (name, proficiency, type, description, icon) VALUES (?, ?, ?, ?, ?)",
             task.name,
-            task.proficiency,
+            task.proficiency ?? -1,
             task.type ?? "n/a",
             task.description ?? "n/a",
             task.icon ?? "n/a"

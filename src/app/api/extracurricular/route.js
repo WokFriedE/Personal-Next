@@ -11,8 +11,12 @@ export async function GET(req, res) {
             driver: sqlite3.Database,
         });
     }
-
-    const langData = await db.all("SELECT * FROM languages");
+    const langData = await db.all("SELECT * FROM extracurricular");
+    const posData = await db.all("SELECT * FROM positions");
+    // Combines the positions with the extracurricular data
+    langData.forEach((lang) => {
+        lang.positions = posData.filter((pos) => pos.extracurricular_id === lang.id);
+    });
     return new Response(JSON.stringify(langData), {
         headers: { "content-type": "application/json" },
         status: 200,
@@ -37,19 +41,27 @@ export async function POST(req, res) {
     }
 
     temp.forEach(async (task) => {
-        if (!task.name || !task.proficiency) {
+        if (!task.name || task.positions.length < 1) {
             return new Response(
                 JSON.stringify({ message: "failed: " + JSON.stringify(task) }, { headers: { "content-type": "application/json" }, status: 400 })
             );
         }
-        await db.run(
-            "INSERT INTO languages (name, proficiency, type, description, icon) VALUES (?, ?, ?, ?, ?)",
+        const currId = await db.run(
+            "INSERT INTO extracurricular (name, description) VALUES (?, ?) RETURNING id",
             task.name,
-            task.proficiency ?? -1,
-            task.type ?? "n/a",
-            task.description ?? "n/a",
-            task.icon ?? "n/a"
+            task.orgDescription ?? "n/a"
         );
+        task.positions.forEach(async (pos) => {
+            db.run(
+                "INSERT INTO positions (title, description, start, end, current, extracurricular_id) VALUES (?, ?, ?, ?, ?, ?)",
+                pos.title,
+                pos.description ?? "n/a",
+                pos.start ?? null,
+                pos.end ?? null,
+                pos.current ?? false,
+                currId.lastID
+            );
+        });
     });
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
 }
@@ -64,8 +76,10 @@ export async function DELETE(req, res) {
     }
 
     const { task } = await req.json();
-    if (task.method === "all") await db.run("DELETE FROM languages");
-    else if (!task.name) await db.run("DELETE FROM languages WHERE name = ?", task.name);
+    if (task.method === "all") {
+        await db.run("DELETE FROM extracurricular");
+        await db.run("DELETE FROM positions");
+    } else if (!task.name) await db.run("DELETE FROM extracurricular WHERE name = ?", task.name);
     else return new Response(JSON.stringify({ message: "failed: no name" }, { headers: { "content-type": "application/json" }, status: 400 }));
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
 }
