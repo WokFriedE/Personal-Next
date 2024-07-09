@@ -1,22 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
 
 export default function DisplayContainer(props) {
 
-    const [innerData, setInnerData] = useState("");
-
     return (
-        <div className="border-gray-500 border flex-1 relative m-2 min-w-52 items-center justify-center flex rounded-md">
-            <p className="absolute -top-3.5 left-2 bg-gray-900 px-2 rounded-lg border-gray-500 border ">{props.title}</p>
-            <div className="flex px-3 py-4 flex-wrap items-center justify-center">
-                {props.item.map((item) => (
-                    <p className="flex-initial px-4 rounded-full border-2 border-neutral-700 m-1 text-center" style={{ hover: {} }}>
+        <div className="p-5 flex flex-col items-center">
+            {props.icon &&
+                <Icon icon={props.icon} className="text-4xl my-1" />}
+            <h4 className="md:text-2xl sm:text-xl text-sm pb-2 text-center capitalize ">{props.title}</h4>
+            <div className="flex flex-wrap items-center justify-center">
+                {props.item.map((item) => (<div key={item.name} className="flex flex-initial sm:my-2 px-4 rounded-full border-2 border-neutral-700 m-1 items-center gap-x-1">
+                    {item.icon &&
+                        <Icon icon={item.icon} />}
+                    <p className="text-center">
                         {item.name}
                     </p>
+                </div>
                 )
                 )}
             </div>
-        </div>
+        </div >
     );
 }

@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconify/react": "^5.0.1",
+    "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "postcss": "^8",

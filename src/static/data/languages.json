@@ -2,76 +2,91 @@
     {
         "name": "C",
         "proficiency": 6,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-c"
     },
     {
         "name": "Python",
         "proficiency": 8,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-python"
     },
     {
         "name": "React JS",
         "proficiency": 6,
-        "type": "framework"
+        "type": "framework",
+        "icon": "vscode-icons:file-type-reactjs"
     },
     {
         "name": "SQL",
         "proficiency": 6,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-sql"
     },
     {
         "name": "Vue",
         "proficiency": 5,
-        "type": "framework"
+        "type": "framework",
+        "icon": "vscode-icons:file-type-vue"
     },
     {
         "name": "JavaScript",
         "proficiency": 6,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-js-official"
     },
     {
         "name": "HTML 5",
         "proficiency": 7,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-html"
     },
     {
         "name": "CSS",
         "proficiency": 6,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-css"
     },
     {
         "name": "Java",
         "proficiency": 5,
-        "type": "language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-java"
     },
     {
         "name": "Bootstrap",
         "proficiency": 4,
-        "type": "library"
+        "type": "library",
+        "icon": "devicon:bootstrap"
     },
     {
         "name": "Tailwind",
         "proficiency": 4,
-        "type": "library"
+        "type": "library",
+        "icon": "vscode-icons:file-type-tailwind"
     },
     {
         "name": "Material UI",
         "proficiency": 4,
-        "type": "library"
+        "type": "library",
+        "icon": "logos:material-ui"
     },
     {
         "name": "Kotlin",
         "proficiency": 4,
-        "type": "Language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-kotlin"
     },
     {
         "name": "PHP",
         "proficiency": 6,
-        "type": "Language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-php3"
     },
     {
-        "name": "SvelteKit 4",
+        "name": "SvelteKit",
         "proficiency": 7,
-        "type": "Language"
+        "type": "language",
+        "icon": "vscode-icons:file-type-svelte"
     }
 ]

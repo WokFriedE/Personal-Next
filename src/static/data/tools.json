@@ -2,36 +2,57 @@
     {
         "name": "GitHub",
         "proficiency": 8,
-        "description": "Used for version control in most projects"
+        "description": "Used for version control in most projects",
+        "icon": "grommet-icons:github",
+        "type": "Version Control"
     },
     {
         "name": "Visual Studio Code",
         "proficiency": 8,
-        "description": "IDE used for prototyping"
+        "description": "IDE used for prototyping",
+        "icon": "logos:visual-studio-code",
+        "type": "Application"
     },
     {
         "name": "Google Suite",
         "proficiency": 8,
-        "description": "Used for capibilities such as Google Sheets, Docs, Drive, and so on"
+        "description": "Used for capibilities such as Google Sheets, Docs, Drive, and so on",
+        "icon": "logos:google-drive",
+        "type": "Application"
     },
     {
         "name": "Excel",
         "proficiency": 8,
-        "description": "Experience with formulas and data processing"
-    },
-    {
-        "name": "Google Suite",
-        "proficiency": 8,
-        "description": "IDE used for prototyping"
+        "description": "Experience with formulas and data processing",
+        "icon": "grommet-icons:document-excel",
+        "type": "Application"
     },
     {
         "name": "Android Studio",
         "proficiency": 7,
-        "description": "Android"
+        "description": "Android",
+        "icon": "logos:android-icon",
+        "type": "Application"
     },
     {
         "name": "Ubuntu",
         "proficiency": 7,
-        "description": "Linux Distro"
+        "description": "Linux Distro",
+        "icon": "logos:ubuntu",
+        "type": "Operating System"
+    },
+    {
+        "name": "Windows 10/11",
+        "proficiency": 8,
+        "description": "Windows OS (primary OS)",
+        "icon": "logos:microsoft-windows-icon",
+        "type": "Operating System"
+    },
+    {
+        "name": "Unity",
+        "proficiency": 5,
+        "description": "Building games",
+        "icon": "mdi:unity",
+        "type": "Application"
     }
 ]
