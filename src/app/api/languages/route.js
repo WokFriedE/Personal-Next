@@ -19,6 +19,7 @@ export async function GET(req, res) {
     });
 }
 
+// Post Request
 export async function POST(req, res) {
     if (!db) {
         db = await open({
@@ -54,6 +55,7 @@ export async function POST(req, res) {
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
 }
 
+// Delete request
 export async function DELETE(req, res) {
     if (!db) {
         db = await open({
@@ -63,6 +65,8 @@ export async function DELETE(req, res) {
     }
 
     const { task } = await req.json();
-    await db.run("DELETE FROM languages WHERE name = ?", task.name);
+    if (task.method === "all") await db.run("DELETE FROM tools");
+    else if (!task.name) await db.run("DELETE FROM tools WHERE name = ?", task.name);
+    else return new Response(JSON.stringify({ message: "failed: no name" }, { headers: { "content-type": "application/json" }, status: 400 }));
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
 }
