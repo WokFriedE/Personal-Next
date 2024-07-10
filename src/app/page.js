@@ -1,20 +1,23 @@
-"use client";
+// "use client";
 
-import React, { useEffect } from "react";
-import languagesJSON from "../static/data/languages.json";
-import skillsJSON from "../static/data/skills.json";
-import toolsJSON from "../static/data/tools.json";
-import extracurricularJSON from "../static/data/manual/extracurricular.json";
+import React from "react";
+// import languagesJSON from "../static/data/languages.json";
+// import skillsJSON from "../static/data/skills.json";
+// import toolsJSON from "../static/data/tools.json";
+// import extracurricularJSON from "../static/data/manual/extracurricular.json";
 import ItemContainer from "./components/item_display";
-import Debugger from "./components/debug";
 import sortExtracurricular from "../../lib/sortExtracurricular";
+import ExtracurricularComponent from "./components/ExtracurricularComp";
+import apiService from "../../lib/apiHandler";
 
-// Change the icons to b/w
+import Debugger from "./components/debug";
+// TODO Change the icons to b/w?
 
-export default function Home() {
-    // Handle Extracurricular data
-    let extraData = sortExtracurricular(extracurricularJSON);
-    console.log(extraData);
+export default async function Home() {
+    const languagesJSON = await apiService.fetchLangData(),
+        skillsJSON = await apiService.fetchSkillsData(),
+        toolsJSON = await apiService.fetchToolsData(),
+        extraJSON = sortExtracurricular(await apiService.fetchExtracurricularData());
 
     return (
         <main className="flex min-h-screen flex-col py-10">
@@ -34,7 +37,7 @@ export default function Home() {
             </div>
             {/* Extracurricular */}
             <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Extracurricular</h1>
-            <div className="2xl:mx-32 sm:mx-12 mx-1 bg-slate-600/[.2] rounded-lg border-2 border-gray-500"></div>
+            <ExtracurricularComponent data={extraJSON} />
         </main>
     );
 }
