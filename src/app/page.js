@@ -20,7 +20,7 @@ export default async function Home() {
         extraJSON = sortExtracurricular(await apiService.fetchExtracurricularData());
 
     return (
-        <main className="flex min-h-screen flex-col py-10">
+        <div className="flex min-h-screen flex-col">
             {/* Hero */}
             <div>
                 <p className="text-5xl text-center">Ethan Ho</p>
@@ -38,6 +38,6 @@ export default async function Home() {
             {/* Extracurricular */}
             <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Extracurricular</h1>
             <ExtracurricularComponent data={extraJSON} />
-        </main>
+        </div>
     );
 }

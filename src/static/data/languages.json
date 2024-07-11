@@ -1,6 +1,6 @@
 [
     {
-        "name": "C",
+        "name": "C/C++",
         "proficiency": 6,
         "type": "language",
         "icon": "vscode-icons:file-type-c"
