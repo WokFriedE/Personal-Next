@@ -12,6 +12,7 @@ import apiService from "../../lib/apiHandler";
 
 import Debugger from "./components/debug";
 // TODO Change the icons to b/w?
+// TODO add a work experience section and a courses section
 
 export default async function Home() {
     const languagesJSON = await apiService.fetchLangData(),
@@ -36,7 +37,7 @@ export default async function Home() {
                 </div>
             </div>
             {/* Extracurricular */}
-            <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Extracurricular</h1>
+            <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">ExtracurricularS</h1>
             <ExtracurricularComponent data={extraJSON} />
         </div>
     );

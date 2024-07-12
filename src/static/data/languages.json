@@ -88,5 +88,17 @@
         "proficiency": 7,
         "type": "language",
         "icon": "vscode-icons:file-type-svelte"
+    },
+    {
+        "name": "SQLite3",
+        "proficiency": 7,
+        "type": "database",
+        "icon": "vscode-icons:file-type-sqlite"
+    },
+    {
+        "name": "NextJS",
+        "proficiency": 7,
+        "type": "framework",
+        "icon": "vscode-icons:file-type-next"
     }
 ]

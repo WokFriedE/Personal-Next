@@ -11,13 +11,13 @@ export async function GET(req, res) {
             driver: sqlite3.Database,
         });
     }
-    const langData = await db.all("SELECT * FROM extracurricular");
+    const extracurrData = await db.all("SELECT * FROM extracurricular");
     const posData = await db.all("SELECT * FROM positions");
     // Combines the positions with the extracurricular data
-    langData.forEach((lang) => {
-        lang.positions = posData.filter((pos) => pos.extracurricular_id === lang.id);
+    extracurrData.forEach((extracurr) => {
+        extracurr.positions = posData.filter((pos) => pos.extracurricular_id === extracurr.id);
     });
-    return new Response(JSON.stringify(langData), {
+    return new Response(JSON.stringify(extracurrData), {
         headers: { "content-type": "application/json" },
         status: 200,
     });
@@ -79,7 +79,7 @@ export async function DELETE(req, res) {
     if (task.method === "all") {
         await db.run("DELETE FROM extracurricular");
         await db.run("DELETE FROM positions");
-    } else if (!task.name) await db.run("DELETE FROM extracurricular WHERE name = ?", task.name);
+    } else if (!task.title) await db.run("DELETE FROM extracurricular WHERE name = ?", task.title);
     else return new Response(JSON.stringify({ message: "failed: no name" }, { headers: { "content-type": "application/json" }, status: 400 }));
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
 }

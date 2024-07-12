@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body className={inter.className + " p-5 flex flex-col"}>
-                <div className="flex flex-row justify-center">
+                <div className="flex flex-row justify-center sticky top-3">
                     <NavBar />
                 </div>
                 <main className="my-5 flex-grow">{children}</main>

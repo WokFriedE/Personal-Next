@@ -85,6 +85,67 @@ db.serialize(() => {
             }
         }
     );
+    db.run(
+        `CREATE TABLE IF NOT EXISTS projects (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            current BOOLEAN,
+                            title VARCHAR(30) UNIQUE,
+                            start DATE,
+                            end DATE,
+                            description TEXT,
+                            link TEXT,
+                            github TEXT,
+                            videoSrc TEXT,
+                            imgSrc TEXT
+                            )`,
+        (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        }
+    );
+    db.run(
+        `CREATE TABLE IF NOT EXISTS projectFeatures (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            feature TEXT,
+                            project_id INTEGER NOT NULL,
+                            UNIQUE (feature, project_id),
+                            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+                            )`,
+        (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        }
+    );
+    db.run(
+        `CREATE TABLE IF NOT EXISTS projectLangs (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            project_id INTEGER NOT NULL,
+                            language_id INTEGER NOT NULL,
+                            UNIQUE (language_id, project_id),
+                            FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE
+                            )`,
+        (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        }
+    );
+    db.run(
+        `CREATE TABLE IF NOT EXISTS projectTools (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            project_id INTEGER NOT NULL,
+                            tool_id INTEGER NOT NULL,
+                            UNIQUE (tool_id, project_id),
+                            FOREIGN KEY (tool_id) REFERENCES tools(id) ON DELETE CASCADE
+                            )`,
+        (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        }
+    );
 
     db.close((err) => {
         if (err) {
