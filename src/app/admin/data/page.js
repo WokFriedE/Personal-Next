@@ -7,7 +7,7 @@ import skillsJSON from "../../../static/data/skills.json";
 import extracurricularJSON from "../../../static/data/manual/extracurricular.json";
 import projectJSON from "../../../static/data/manual/projects.json";
 
-import ControlButtons from "../../../../components/controlBtn";
+import ControlButtons from "../../../components/controlBtn";
 
 export default function adminDataPage() {
     return (

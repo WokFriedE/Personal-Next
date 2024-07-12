@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// Content needs to include any other directory, including components
 module.exports = {
     content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
     theme: {
