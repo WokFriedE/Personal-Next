@@ -98,6 +98,9 @@ export async function DELETE(req) {
     const { task } = await req.json();
     if (task.method === "all") {
         await db.run("DELETE FROM projects");
+        await db.run("DELETE FROM projectFeatures");
+        await db.run("DELETE FROM projectLangs");
+        await db.run("DELETE FROM projectTools");
     } else if (!task.title) await db.run("DELETE FROM projects WHERE name = ?", task.title);
     else return new Response(JSON.stringify({ message: "failed: no name" }, { headers: { "content-type": "application/json" }, status: 400 }));
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));
