@@ -5,12 +5,12 @@ import React from "react";
 // import skillsJSON from "../static/data/skills.json";
 // import toolsJSON from "../static/data/tools.json";
 // import extracurricularJSON from "../static/data/manual/extracurricular.json";
-import ItemContainer from "./components/item_display";
+import ItemContainer from "../../components/item_display";
 import sortExtracurricular from "../../lib/sortExtracurricular";
-import ExtracurricularComponent from "./components/ExtracurricularComp";
+import ExtracurricularComponent from "../../components/ExtracurricularComp";
 import apiService from "../../lib/apiHandler";
 
-import Debugger from "./components/debug";
+import Debugger from "../../components/debug";
 // TODO Change the icons to b/w?
 // TODO add a work experience section and a courses section
 
