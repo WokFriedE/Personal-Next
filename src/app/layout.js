@@ -31,3 +31,15 @@ export default function RootLayout({ children }) {
         </html>
     );
 }
+
+// TODO: Add a light mode
+// TODO: Update all API endpoints to use NextResponse and be more streamlined
+// TODO: Update all POST requests to update on conflict
+// TODO: Add session cookie
+// TODO: Update middleware to prevent unauthorized access to admin pages
+
+// TODO: Allow for the addition of new projects
+// TODO: allow admin to add/delete features and tech for each project
+// TODO: Allow for additions of everything
+
+// TODO: Make "resume" page --> add contact information for requesting resume + other socials like LinkedIn
