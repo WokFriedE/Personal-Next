@@ -1,10 +1,4 @@
-// "use client";
-
 import React from "react";
-// import languagesJSON from "../static/data/languages.json";
-// import skillsJSON from "../static/data/skills.json";
-// import toolsJSON from "../static/data/tools.json";
-// import extracurricularJSON from "../static/data/manual/extracurricular.json";
 import ItemContainer from "../components/item_display";
 import sortExtracurricular from "../../lib/sortExtracurricular";
 import ExtracurricularComponent from "../components/ExtracurricularComp";

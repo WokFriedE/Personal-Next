@@ -146,6 +146,17 @@ db.serialize(() => {
             }
         }
     );
+    db.run(
+        `CREATE TABLE IF NOT EXISTS passwords (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            password VARCHAR(50) NOT NULL UNIQUE
+                            )`,
+        (err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+        }
+    );
 
     db.close((err) => {
         if (err) {

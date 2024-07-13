@@ -4,7 +4,7 @@ import { open } from "sqlite";
 let db = null;
 
 // Handler to GET request to get all data
-export async function GET(req, res) {
+export async function GET(req) {
     if (!db) {
         db = await open({
             filename: "./src/static/data/portfolio.db",
@@ -24,7 +24,7 @@ export async function GET(req, res) {
 }
 
 // Post Request
-export async function POST(req, res) {
+export async function POST(req) {
     if (!db) {
         db = await open({
             filename: "./src/static/data/portfolio.db",
@@ -67,7 +67,7 @@ export async function POST(req, res) {
 }
 
 // Delete request
-export async function DELETE(req, res) {
+export async function DELETE(req) {
     if (!db) {
         db = await open({
             filename: "./src/static/data/portfolio.db",
