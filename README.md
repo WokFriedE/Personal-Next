@@ -43,6 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     -   [Grommet Icons](https://icones.js.org/collection/grommet-icons)
     -   [Logos](https://icones.js.org/collection/logos)
 -   [Toastify](https://fkhadra.github.io/react-toastify/introduction/)
+-   SQLite3 + SQLite
 
 # Technologies used
 
