@@ -47,3 +47,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 -   NextJS
 -   SQLite + sqlite3
+
+# Some issues I found out
+
+-   next js img html src's start in the public folder
+-   client side comps cannot open env files
+-   Middleware should be in src file and can be used to process specific routes
+    -   () allows matching paths to use regex
