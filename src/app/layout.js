@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "../static/styles/globals.css";
-import Head from "next/head";
+import { Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import NavBar from "../components/nav";
 import Footer from "../components/footer";
@@ -20,17 +21,20 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={inter.className + " p-5 flex flex-col"}>
-                <div className="flex flex-row justify-center sticky top-3">
+                <div className="flex flex-row justify-center items-center sticky top-3">
                     <NavBar />
                 </div>
                 <main className="my-5 flex-grow">{children}</main>
                 <div className=" flex flex-row justify-center">
                     <Footer />
                 </div>
+                <ToastContainer position="top-left" autoClose={2000} closeOnClick theme="dark" transition={Slide} newestOnTop={true} limit={3} />
             </body>
         </html>
     );
 }
+
+// TODO: Make pop up messages
 
 // TODO: Add a light mode
 // TODO: Update all API endpoints to use NextResponse and be more streamlined

@@ -42,6 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     -   [VSCODE Icons](https://icones.js.org/collection/vscode-icons)
     -   [Grommet Icons](https://icones.js.org/collection/grommet-icons)
     -   [Logos](https://icones.js.org/collection/logos)
+-   [Toastify](https://fkhadra.github.io/react-toastify/introduction/)
 
 # Technologies used
 
@@ -54,3 +55,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 -   client side comps cannot open env files
 -   Middleware should be in src file and can be used to process specific routes
     -   () allows matching paths to use regex
+-   NextJS now uses a metadata export in the main layout for things like title and icons

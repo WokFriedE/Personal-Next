@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
+import { toast } from "react-toastify";
 
 export default function ControlButtons(props) {
     const api = props.api;
     const tok = props.tok;
     const handleClick = async () => {
-        const res = await fetch(api, {
+        const res = fetch(api, {
             method: "POST",
             body: JSON.stringify({ task: props.task }),
             headers: {
@@ -15,9 +16,14 @@ export default function ControlButtons(props) {
         })
             .catch((err) => console.error(err))
             .then(console.log("Success"));
+        toast.promise(res, {
+            pending: `${props.title} Adding...`,
+            success: `${props.title} Added`,
+            error: `${props.title} Error`,
+        });
     };
     const handleClickDelete = async () => {
-        fetch(api, {
+        const res = fetch(api, {
             method: "DELETE",
             body: JSON.stringify({ task: { method: "all" } }),
             headers: {
@@ -27,6 +33,11 @@ export default function ControlButtons(props) {
         })
             .catch((err) => console.error(err))
             .then(console.log("Success"));
+        toast.promise(res, {
+            pending: `${props.title} Deleting...`,
+            success: `${props.title} Deleted`,
+            error: `${props.title} Error`,
+        });
     };
 
     return (
