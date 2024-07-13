@@ -1,15 +1,16 @@
 "use client";
-
 import React from "react";
 
 export default function ControlButtons(props) {
     const api = props.api;
+    const tok = props.tok;
     const handleClick = async () => {
-        fetch(api, {
+        const res = await fetch(api, {
             method: "POST",
             body: JSON.stringify({ task: props.task }),
             headers: {
                 "Content-Type": "application/json",
+                Authorization: tok,
             },
         })
             .catch((err) => console.error(err))
@@ -21,6 +22,7 @@ export default function ControlButtons(props) {
             body: JSON.stringify({ task: { method: "all" } }),
             headers: {
                 "Content-Type": "application/json",
+                Authorization: tok,
             },
         })
             .catch((err) => console.error(err))

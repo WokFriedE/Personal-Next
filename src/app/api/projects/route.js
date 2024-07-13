@@ -54,32 +54,44 @@ export async function POST(req) {
             }
 
             const currId = await db.run(
-                "INSERT INTO projects (title, current, start, end, description, imgSrc, link, github, videoSrc) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id",
-                taskI.title,
-                taskI.current ?? false,
-                taskI.start ?? null,
-                taskI.end ?? null,
-                taskI.description ?? "n/a",
-                taskI.imgSrc ?? null,
-                taskI.link ?? null,
-                taskI.github ?? null,
-                taskI.videoSrc ?? null
+                `INSERT INTO projects (title, current, start, end, description, imgSrc, link, github, videoSrc) VALUES ($title, $current, $start, $end, $description, $imgSrc, $link, $github, $videoSrc) 
+                ON conflict do UPDATE set title=$title, current=$current, start=$start, end=$end, description=$description, imgSrc=$imgSrc, link=$link, github=$github, videoSrc=$videoSrc 
+                RETURNING id `,
+                {
+                    $title: taskI.title,
+                    $current: taskI.current ?? false,
+                    $start: taskI.start ?? null,
+                    $end: taskI.end ?? null,
+                    $description: taskI.description ?? "n/a",
+                    $imgSrc: taskI.imgSrc ?? null,
+                    $link: taskI.link ?? null,
+                    $github: taskI.github ?? null,
+                    $videoSrc: taskI.videoSrc ?? null,
+                }
             );
             taskI.features.forEach(async (feat) => {
-                db.run("INSERT INTO projectFeatures (feature, project_id) VALUES (?, ?)", feat, currId.lastID);
+                db.run(
+                    `INSERT INTO projectFeatures (feature, project_id) VALUES ($feature, $pid) 
+                    ON conflict do UPDATE set feature=$feature`,
+                    {
+                        $feature: feat,
+                        $pid: currId.lastID,
+                    }
+                );
             });
             if (taskI.tech) {
                 taskI.tech.forEach(async (techItem) => {
                     if (techItem.language_id) {
-                        db.run("INSERT INTO projectLangs (language_id, project_id) VALUES (?, ?)", techItem.language_id, currId.lastID);
+                        db.run(`INSERT INTO projectLangs (language_id, project_id) VALUES ($lid, $pid)`, techItem.language_id, currId.lastID);
                     } else if (techItem.tool_id) {
-                        db.run("INSERT INTO projectTools (tool_id, project_id) VALUES (?, ?)", techItem.tool_id, currId.lastID);
+                        db.run(`INSERT INTO projectTools (tool_id, project_id) VALUES ($tid, $pid)`, techItem.tool_id, currId.lastID);
                     }
                 });
             }
         });
-    } catch (err) {
         return new Response(JSON.stringify({ message: "success: added all" }, { headers: { "content-type": "application/json" }, status: 200 }));
+    } catch (err) {
+        JSON.stringify({ message: "failed", curr: JSON.stringify(task) }, { headers: { "content-type": "application/json" }, status: 400 });
     }
     return new Response(
         JSON.stringify({ message: "failed", curr: JSON.stringify(task) }, { headers: { "content-type": "application/json" }, status: 400 })
