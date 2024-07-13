@@ -147,10 +147,11 @@ db.serialize(() => {
         }
     );
     db.run(
-        `CREATE TABLE IF NOT EXISTS passwords (
+        `CREATE TABLE IF NOT EXISTS users (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            password VARCHAR(50) NOT NULL UNIQUE
-                            )`,
+                            username VARCHAR(50) NOT NULL UNIQUE,
+                            password VARCHAR(50) NOT NULL
+                                                        )`,
         (err) => {
             if (err) {
                 return console.error(err.message);
