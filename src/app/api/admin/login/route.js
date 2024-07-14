@@ -2,6 +2,7 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import bycrpt from "bcrypt";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 let db = null;
 
@@ -12,26 +13,35 @@ export async function POST(req) {
             driver: sqlite3.Database,
         });
     }
-
+    const { username, password } = await req.json();
     try {
-        const { username, password } = await req.json();
-
         if (username && password) {
             try {
-                // Insert into db otherwise update the password
                 const hash = await db.get("SELECT password FROM users WHERE username=$user LIMIT 1", {
                     $user: username,
                 });
+                if (!hash) {
+                    return NextResponse.json({ message: "Invalid User" }, { status: 401 });
+                }
 
                 const res = await bycrpt.compare(password, hash.password);
-
-                if (res) return NextResponse.json({ message: "User Verified" }, { status: 200 });
-                else return NextResponse.json({ message: "User Invalid" }, { status: 400 });
+                // TODO: Establish with JWT
+                // const authenticated = await bycrpt.hash(process.env.LOGIN_TOK, 10);
+                const authenticated = process.env.LOGIN_TOK;
+                if (res) {
+                    cookies().set("access-token", authenticated, {
+                        maxAge: 60 * 60 * 24,
+                        secure: true,
+                    });
+                    return NextResponse.json({ message: "User Verified" }, { status: 200 });
+                } else return NextResponse.json({ message: "User Invalid" }, { status: 401 });
             } catch (error) {
+                console.error(error);
                 return NextResponse.json({ message: "Invalid User" }, { status: 401 });
             }
         }
     } catch (err) {
+        console.error(error);
         return NextResponse.json({ message: "Error has occured" }, { status: 400 });
     }
     return NextResponse.json({ message: "Error has occured" }, { status: 400 });

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 // Photography: "/portfolio/photo",
 export default function nav() {
-    let pages = { About: "/", Projects: "/portfolio/tech", Resume: "/resume" };
+    let pages = { About: "/", Projects: "/portfolio/tech", Resume: "/resume", Admin: "/admin/data" };
     const pathname = usePathname();
 
     function currentPage(item) {
@@ -14,7 +14,8 @@ export default function nav() {
             (item === "About" && pathname === "/") ||
             (item === "Projects" && pathname === "/portfolio/tech") ||
             // (item === "Photography" && pathname === "/portfolio/photo") ||
-            (item === "Resume" && pathname === "/resume")
+            (item === "Resume" && pathname === "/resume") ||
+            (item === "Admin" && pathname === "/admin/data")
         ) {
             return "bg-zinc-500";
         }

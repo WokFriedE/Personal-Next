@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "../static/styles/globals.css";
-import { Slide, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import { ToastContainer } from "../components/ToastProvider";
 
 import NavBar from "../components/nav";
 import Footer from "../components/footer";
@@ -28,22 +28,25 @@ export default function RootLayout({ children }) {
                 <div className=" flex flex-row justify-center">
                     <Footer />
                 </div>
-                <ToastContainer position="top-left" autoClose={2000} closeOnClick theme="dark" transition={Slide} newestOnTop={true} limit={3} />
+                <ToastContainer position="top-left" autoClose={2000} closeOnClick theme="dark" newestOnTop={true} limit={3} />
             </body>
         </html>
     );
 }
-
-// TODO: Make pop up messages
-
-// TODO: Add a light mode
+// TODO: Add session cookie
 // TODO: Update all API endpoints to use NextResponse and be more streamlined
 // TODO: Update all POST requests to update on conflict
-// TODO: Add session cookie
 // TODO: Update middleware to prevent unauthorized access to admin pages
 
 // TODO: Allow for the addition of new projects
 // TODO: allow admin to add/delete features and tech for each project
 // TODO: Allow for additions of everything
+// TODO: Admin page has the ability to nuke all the databases and reset them
 
 // TODO: Make "resume" page --> add contact information for requesting resume + other socials like LinkedIn
+// TODO: Add an image upload ability
+
+// TODO: Add a light mode
+// TODO: Fix 404 error with toastify / swap it out
+// TODO: add scroll animations
+// TODO: dynamic loading for projects tab
