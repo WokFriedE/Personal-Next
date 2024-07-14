@@ -6,12 +6,14 @@ import extracurricularJSON from "../../../static/data/manual/extracurricular.jso
 import projectJSON from "../../../static/data/manual/projects.json";
 
 import ControlButtons from "../../../components/controlBtn";
+import SignOut from "../../../components/SignOut";
 
 export default function adminDataPage() {
     const token = process.env.API_TOK;
     return (
-        <div className="flex min-h-screen flex-col py-10">
-            <h1>Admin Data Page</h1>
+        <div className="flex min-h-screen flex-col py-10 gap-y-4">
+            <h1 className="text-2xl">Admin Data Page</h1>
+            <SignOut />
             <div className="flex flex-row gap-x-3 flex-wrap gap-y-3">
                 {/* Langs */}
                 <ControlButtons title="Language" api="/api/languages" task={languagesJSON} tok={token} />
@@ -23,6 +25,7 @@ export default function adminDataPage() {
                 <ControlButtons title="Extracurricular" api="/api/extracurricular" task={extracurricularJSON} tok={token} />
                 {/* Projects */}
                 <ControlButtons title="Projects" api="/api/projects" task={projectJSON} tok={token} />
+                {/* Signout */}
             </div>
         </div>
     );
