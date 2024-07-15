@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
-import getAccessCookie from "../../../../lib/getCookie";
+import { getAccessCookie } from "../../../../lib/handleCookie";
 
 export default function loginAdmin() {
     const [visible, setVisible] = useState(false);
@@ -47,7 +47,7 @@ export default function loginAdmin() {
 
     useEffect(() => {
         getCookie();
-        if (access) redirect("/admin/data");
+        if (access) redirect("/admin/dashboard");
     }, [access]);
 
     return (
