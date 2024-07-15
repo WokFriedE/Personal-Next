@@ -28,8 +28,25 @@ body {
     min-height: 100vh;
 }
 
-form > * {
+form > *,
+input {
     @apply text-gray-900;
+}
+
+form > label {
+    @apply text-slate-50;
+}
+
+input,
+textarea,
+select {
+    @apply text-gray-900;
+    @apply px-2;
+}
+
+form > button,
+.basicBtn {
+    @apply flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1 hover:bg-slate-400 ease-in-out duration-200;
 }
 
 @layer utilities {

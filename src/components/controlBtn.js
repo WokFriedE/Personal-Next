@@ -41,7 +41,7 @@ export default function ControlButtons(props) {
     };
 
     return (
-        <div className="flex space-x-3 flex-row flex-1">
+        <div className="flex space-x-3 flex-row flex-initial">
             <button onClick={handleClick} className="flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1">
                 Add All
             </button>
