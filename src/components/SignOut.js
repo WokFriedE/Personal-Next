@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
-import deleteCookie from "@/../lib/deleteCookie";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
+import { deleteAccessCookie } from "@/../lib/handleCookie";
 
 export default function SignOut() {
     const handleClick = async () => {
-        const res = deleteCookie();
+        const res = deleteAccessCookie();
         toast.promise(res, {
             pending: "Signing Out...",
             success: "Signed Out",

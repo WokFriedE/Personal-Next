@@ -57,3 +57,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 -   Middleware should be in src file and can be used to process specific routes
     -   () allows matching paths to use regex
 -   NextJS now uses a metadata export in the main layout for things like title and icons
+
+# Items I Want to Look Into
+
+-   [page transitions](https://www.youtube.com/watch?v=fx6KMItwJAw)

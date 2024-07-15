@@ -26,7 +26,7 @@ export default async function Home() {
                 <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Skills</h1>
                 <div className="2xl:mx-32 sm:mx-12 mx-1 bg-slate-600/[.2] rounded-lg border-2 border-gray-500">
                     <div className=" grid md:grid-cols-3 md:divide-x-2 sm:grid-cols-1 md:divide-y-0 divide-solid divide-y-2 divide-gray-500">
-                        <ItemContainer item={languagesJSON} title="Languages" icon="heroicons-outline:code" />
+                        <ItemContainer item={languagesJSON} title="Technologies" icon="heroicons-outline:code" />
                         <ItemContainer item={skillsJSON} title="Skills" icon="heroicons-outline:user" />
                         <ItemContainer item={toolsJSON} title="Tools" icon="heroicons-outline:computer-desktop" />
                     </div>
