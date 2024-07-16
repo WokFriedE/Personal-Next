@@ -46,7 +46,7 @@ select {
 
 form > button,
 .basicBtn {
-    @apply flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1 hover:bg-slate-400 ease-in-out duration-200;
+    @apply flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1 hover:bg-slate-400 ease-in-out duration-200 disabled:bg-slate-500;
 }
 
 @layer utilities {

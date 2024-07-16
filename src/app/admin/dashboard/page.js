@@ -13,9 +13,10 @@ import ProjectFormComp from "./ProjectForm";
 import apiService from "../../../../lib/apiHandler";
 import ItemForm from "./ItemForm";
 
+// TODO fix the controlBtn to use server actions
+
 export default async function adminDataPage() {
     const token = process.env.API_TOK;
-    //
     const languages = (await apiService.fetchLangData())
         .map((lang) => ({ title: lang.name, id: lang.id }))
         .sort((a, b) => a.title.localeCompare(b.title));
@@ -23,7 +24,7 @@ export default async function adminDataPage() {
         .map((lang) => ({ title: lang.name, id: lang.id }))
         .sort((a, b) => a.title.localeCompare(b.title));
 
-    const itemSubmit = async (formData, api) => {
+    const itemSubmit = async (api, formData) => {
         "use server";
         const output = {
             name: formData.get("name"),
@@ -32,7 +33,20 @@ export default async function adminDataPage() {
             icon: formData.get("icon"),
             description: formData.get("description"),
         };
-        console.log(output, api);
+
+        // console.log(JSON.stringify(output));
+        fetch(process.env.BASE_URL + api, {
+            method: "POST",
+            body: JSON.stringify({ task: output }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        }).catch((err) => {
+            console.error(err);
+            return { success: false };
+        });
+        return { success: true };
     };
 
     const handleExtraSubmit = async (formData) => {
@@ -88,6 +102,7 @@ export default async function adminDataPage() {
     return (
         <div className="flex min-h-screen flex-col py-10 gap-y-4">
             <h1 className="text-2xl">Admin Data Page</h1>
+            {/* <toastMsg msg="hi" type="info" /> */}
             <SignOut />
             <div className="flex flex-col flex-wrap gap-y-3">
                 <div className="flex flex-row gap-x-3">
@@ -95,19 +110,19 @@ export default async function adminDataPage() {
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
                         <p>Langs</p>
                         <ControlButtons title="Language" api="/api/languages" task={languagesJSON} tok={token} />
-                        <ItemForm api="/api/languages/" />
+                        <ItemForm api="/api/languages/" submit={itemSubmit} types={["Language", "Framework", "Library", "Database", "Other"]} />
                     </div>
                     {/* Tools */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
                         <p>Tools</p>
                         <ControlButtons title="Tools" api="/api/tools/" task={toolsJSON} tok={token} />
-                        <ItemForm api="/api/tools/" />
+                        <ItemForm api="/api/tools/" submit={itemSubmit} types={["Version Control", "Application", "Operating System", "Other"]} />
                     </div>
                     {/* Skills */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
                         <p>Skills</p>
                         <ControlButtons title="Skills" api="/api/skills/" task={skillsJSON} tok={token} />
-                        <ItemForm api="/api/skills/" />
+                        <ItemForm api="/api/skills/" submit={itemSubmit} />
                     </div>
                 </div>
                 <div className="flex flex-row gap-x-3 gap-y-3">
