@@ -34,7 +34,6 @@ export default async function adminDataPage() {
             description: formData.get("description"),
         };
 
-        // console.log(JSON.stringify(output));
         fetch(process.env.BASE_URL + api, {
             method: "POST",
             body: JSON.stringify({ task: output }),
@@ -44,9 +43,15 @@ export default async function adminDataPage() {
             },
         }).catch((err) => {
             console.error(err);
-            return { success: false };
         });
-        return { success: true };
+        let status = 500;
+        status = await res.then((res) => {
+            return res.status;
+        });
+        if (status !== 200) {
+            return new Error("Error");
+        }
+        return Promise.resolve("Success");
     };
 
     const handleExtraSubmit = async (formData) => {
@@ -70,19 +75,39 @@ export default async function adminDataPage() {
             orgDescription: formData.get("description"),
             positions: positions,
         };
-        console.log(output);
+
+        fetch(process.env.BASE_URL + "/api/extracurricular", {
+            method: "POST",
+            body: JSON.stringify({ task: output }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        }).catch((err) => {
+            console.error(err);
+        });
+
+        let status = 500;
+        status = await res.then((res) => {
+            return res.status;
+        });
+        if (status !== 200) {
+            return new Error("Error");
+        }
+        return Promise.resolve("Success");
     };
 
     const handleProjectSubmit = async (formData) => {
         "use server";
-        console.log(formData);
 
         // Process image
         const img = formData.get("img");
+
         const tech = formData
             .getAll("languages")
             .map((lang) => ({ language_id: lang }))
             .concat(formData.getAll("tools").map((tool) => ({ tool_id: tool })));
+        const feats = formData.getAll("feats");
         const output = {
             title: formData.get("title"),
             current: formData.get("current"),
@@ -94,9 +119,29 @@ export default async function adminDataPage() {
             github: formData.get("github"),
             videoSrc: formData.get("video"),
             tech: tech,
+            features: feats,
         };
 
-        console.log(output);
+        // console.log(output);
+        const res = fetch(process.env.BASE_URL + "/api/projects", {
+            method: "POST",
+            body: JSON.stringify({ task: output }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        }).catch((err) => {
+            console.error(err);
+        });
+
+        let status = 500;
+        status = await res.then((res) => {
+            return res.status;
+        });
+        if (status !== 200) {
+            return new Error("Error");
+        }
+        return Promise.resolve("Success");
     };
 
     return (
@@ -130,13 +175,13 @@ export default async function adminDataPage() {
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
                         <p>Extracurricular</p>
                         <ControlButtons title="Extracurricular" api="/api/extracurricular/" task={extracurricularJSON} tok={token} />
-                        <ExtracurricularFormComp handleSubmit={handleExtraSubmit} />
+                        <ExtracurricularFormComp submit={handleExtraSubmit} />
                     </div>
                     {/* Projects */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
                         <p>Projects</p>
                         <ControlButtons title="Projects" api="/api/projects/" task={projectJSON} tok={token} />
-                        <ProjectFormComp languages={languages} tools={tools} handleSubmit={handleProjectSubmit} />
+                        <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} />
                     </div>
                 </div>
             </div>
