@@ -11,8 +11,8 @@ export async function GET(req) {
             driver: sqlite3.Database,
         });
     }
-    const extracurrData = await db.all("SELECT * FROM extracurricular");
-    const posData = await db.all("SELECT * FROM positions");
+    const extracurrData = await db.all(`SELECT * FROM extracurricular`);
+    const posData = await db.all(`SELECT * FROM positions WHERE is_active = 1`);
     // Combines the positions with the extracurricular data
     extracurrData.forEach((extracurr) => {
         extracurr.positions = posData.filter((pos) => pos.extracurricular_id === extracurr.id);
@@ -47,19 +47,26 @@ export async function POST(req) {
             );
         }
         const currId = await db.run(
-            "INSERT INTO extracurricular (name, description) VALUES (?, ?) RETURNING id",
-            task.name,
-            task.orgDescription ?? "n/a"
+            `INSERT INTO extracurricular (name, description, is_active) VALUES ($name, $description, $is_active) RETURNING id`,
+            {
+                $name: task.name,
+                $description: task.orgDescription ?? "n/a",
+                $is_active: 1,
+            }
         );
         task.positions.forEach(async (pos) => {
             db.run(
-                "INSERT INTO positions (title, description, start, end, current, extracurricular_id) VALUES (?, ?, ?, ?, ?, ?)",
-                pos.title,
-                pos.description ?? "n/a",
-                pos.start ?? null,
-                pos.end ?? null,
-                pos.current ?? false,
-                currId.lastID
+                `INSERT INTO positions (title, description, start, end, current, extracurricular_id, is_active) VALUES ($title, $description, $start, $end, $current, $currId, $is_active)
+                ON conflict do UPDATE set title=$title, description=$description, start=$start, end=$end, current=$current, extracurricular_id=$currId, is_active=$is_active`,
+                {
+                    $title: pos.title,
+                    $description: pos.description ?? "n/a",
+                    $start: pos.start ?? null,
+                    $end: pos.end ?? null,
+                    $current: pos.current ?? false,
+                    $currId: currId.lastID,
+                    $is_active: 1,
+                }
             );
         });
     });

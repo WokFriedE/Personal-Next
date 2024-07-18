@@ -11,8 +11,8 @@ export async function GET(req) {
             driver: sqlite3.Database,
         });
     }
-    const projectData = await db.all("SELECT * FROM projects");
-    const featureData = await db.all("SELECT * FROM projectFeatures");
+    const projectData = await db.all("SELECT * FROM projects WHERE is_active = 1");
+    const featureData = await db.all("SELECT * FROM projectFeatures WHERE is_active = 1");
     const techData = await db.all(
         "SELECT * FROM (SELECT * FROM projectTools LEFT JOIN tools ON projectTools.tool_id = tools.id UNION ALL SELECT * FROM projectLangs LEFT JOIN languages ON projectLangs.language_id = languages.id)"
     );
@@ -54,8 +54,8 @@ export async function POST(req) {
             }
 
             const currId = await db.run(
-                `INSERT INTO projects (title, current, start, end, description, imgSrc, link, github, videoSrc) VALUES ($title, $current, $start, $end, $description, $imgSrc, $link, $github, $videoSrc) 
-                ON conflict do UPDATE set title=$title, current=$current, start=$start, end=$end, description=$description, imgSrc=$imgSrc, link=$link, github=$github, videoSrc=$videoSrc 
+                `INSERT INTO projects (title, current, start, end, description, imgSrc, link, github, videoSrc, is_active) VALUES ($title, $current, $start, $end, $description, $imgSrc, $link, $github, $videoSrc, $is_active) 
+                ON conflict do UPDATE set title=$title, current=$current, start=$start, end=$end, description=$description, imgSrc=$imgSrc, link=$link, github=$github, videoSrc=$videoSrc, is_active=$is_active
                 RETURNING id `,
                 {
                     $title: taskI.title,
@@ -67,15 +67,17 @@ export async function POST(req) {
                     $link: taskI.link ?? null,
                     $github: taskI.github ?? null,
                     $videoSrc: taskI.videoSrc ?? null,
+                    $is_active: 1,
                 }
             );
             taskI.features.forEach(async (feat) => {
                 db.run(
-                    `INSERT INTO projectFeatures (feature, project_id) VALUES ($feature, $pid) 
-                    ON conflict do UPDATE set feature=$feature`,
+                    `INSERT INTO projectFeatures (feature, project_id, is_active) VALUES ($feature, $pid, $is_active) 
+                    ON conflict do UPDATE set feature=$feature, is_active=$is_active`,
                     {
                         $feature: feat,
                         $pid: currId.lastID,
+                        $is_active: 1,
                     }
                 );
             });

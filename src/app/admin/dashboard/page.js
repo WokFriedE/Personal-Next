@@ -17,6 +17,8 @@ import ItemForm from "./ItemForm";
 
 export default async function adminDataPage() {
     const token = process.env.API_TOK;
+    const BASE_URL = process.env.BASE_URL;
+
     const languages = (await apiService.fetchLangData())
         .map((lang) => ({ title: lang.name, id: lang.id }))
         .sort((a, b) => a.title.localeCompare(b.title));
@@ -34,7 +36,7 @@ export default async function adminDataPage() {
             description: formData.get("description"),
         };
 
-        fetch(process.env.BASE_URL + api, {
+        fetch(BASE_URL + api, {
             method: "POST",
             body: JSON.stringify({ task: output }),
             headers: {
@@ -44,8 +46,8 @@ export default async function adminDataPage() {
         }).catch((err) => {
             console.error(err);
         });
-        let status = 500;
-        status = await res.then((res) => {
+
+        const status = await res.then((res) => {
             return res.status;
         });
         if (status !== 200) {
@@ -76,7 +78,7 @@ export default async function adminDataPage() {
             positions: positions,
         };
 
-        fetch(process.env.BASE_URL + "/api/extracurricular", {
+        fetch(BASE_URL + "/api/extracurricular", {
             method: "POST",
             body: JSON.stringify({ task: output }),
             headers: {
@@ -87,8 +89,7 @@ export default async function adminDataPage() {
             console.error(err);
         });
 
-        let status = 500;
-        status = await res.then((res) => {
+        const status = await res.then((res) => {
             return res.status;
         });
         if (status !== 200) {
@@ -123,7 +124,7 @@ export default async function adminDataPage() {
         };
 
         // console.log(output);
-        const res = fetch(process.env.BASE_URL + "/api/projects", {
+        const res = fetch(BASE_URL + "/api/projects", {
             method: "POST",
             body: JSON.stringify({ task: output }),
             headers: {
@@ -134,12 +135,51 @@ export default async function adminDataPage() {
             console.error(err);
         });
 
-        let status = 500;
-        status = await res.then((res) => {
+        const status = await res.then((res) => {
             return res.status;
         });
         if (status !== 200) {
             return new Error("Error");
+        }
+        return Promise.resolve("Success");
+    };
+
+    const itemAdd = async (api, taskEnter) => {
+        "use server";
+        const res = fetch(BASE_URL + api, {
+            method: "POST",
+            body: JSON.stringify({ task: taskEnter }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        }).catch((err) => console.error(err));
+
+        const status = await res.then((res) => {
+            return res.status;
+        });
+        if (status !== 200) {
+            return new Error("Error adding all");
+        }
+        return Promise.resolve("Success");
+    };
+
+    const itemDelete = async (api) => {
+        "use server";
+        const res = fetch(BASE_URL + api, {
+            method: "DELETE",
+            body: JSON.stringify({ task: { method: "all" } }),
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+            },
+        }).catch((err) => console.error(err));
+
+        const status = await res.then((res) => {
+            return res.status;
+        });
+        if (status !== 200) {
+            return new Error("Error with deleting all");
         }
         return Promise.resolve("Success");
     };
@@ -152,35 +192,41 @@ export default async function adminDataPage() {
             <div className="flex flex-col flex-wrap gap-y-3">
                 <div className="flex flex-row gap-x-3">
                     {/* Langs */}
-                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
-                        <p>Langs</p>
-                        <ControlButtons title="Language" api="/api/languages" task={languagesJSON} tok={token} />
+                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
+                        <p className="text-xl text-center">Langs</p>
+                        <ControlButtons title="Language" api="/api/languages" task={languagesJSON} delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/languages/" submit={itemSubmit} types={["Language", "Framework", "Library", "Database", "Other"]} />
                     </div>
                     {/* Tools */}
-                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
-                        <p>Tools</p>
-                        <ControlButtons title="Tools" api="/api/tools/" task={toolsJSON} tok={token} />
+                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
+                        <p className="text-xl text-center">Tools</p>
+                        <ControlButtons title="Tools" api="/api/tools/" task={toolsJSON} delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/tools/" submit={itemSubmit} types={["Version Control", "Application", "Operating System", "Other"]} />
                     </div>
                     {/* Skills */}
-                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
-                        <p>Skills</p>
-                        <ControlButtons title="Skills" api="/api/skills/" task={skillsJSON} tok={token} />
+                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
+                        <p className="text-xl text-center">Skills</p>
+                        <ControlButtons title="Skills" api="/api/skills/" task={skillsJSON} delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/skills/" submit={itemSubmit} />
                     </div>
                 </div>
                 <div className="flex flex-row gap-x-3 gap-y-3">
                     {/* Extracurricular */}
-                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
-                        <p>Extracurricular</p>
-                        <ControlButtons title="Extracurricular" api="/api/extracurricular/" task={extracurricularJSON} tok={token} />
+                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
+                        <p className="text-xl text-center">Extracurricular</p>
+                        <ControlButtons
+                            title="Extracurricular"
+                            api="/api/extracurricular/"
+                            task={extracurricularJSON}
+                            delete={itemDelete}
+                            add={itemAdd}
+                        />
                         <ExtracurricularFormComp submit={handleExtraSubmit} />
                     </div>
                     {/* Projects */}
-                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2">
-                        <p>Projects</p>
-                        <ControlButtons title="Projects" api="/api/projects/" task={projectJSON} tok={token} />
+                    <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
+                        <p className="text-xl text-center">Projects</p>
+                        <ControlButtons title="Projects" api="/api/projects/" task={projectJSON} delete={itemDelete} add={itemAdd} />
                         <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} />
                     </div>
                 </div>

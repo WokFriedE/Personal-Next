@@ -12,7 +12,7 @@ export async function GET(req, res) {
         });
     }
 
-    const langData = await db.all("SELECT * FROM skills");
+    const langData = await db.all("SELECT * FROM skills WHERE is_active = 1");
     return new Response(JSON.stringify(langData), {
         headers: { "content-type": "application/json" },
         status: 200,
@@ -43,12 +43,16 @@ export async function POST(req, res) {
             );
         }
         await db.run(
-            "INSERT INTO skills (name, proficiency, type, description, icon) VALUES (?, ?, ?, ?, ?)",
-            task.name,
-            task.proficiency ?? -1,
-            task.type ?? "n/a",
-            task.description ?? "n/a",
-            task.icon ?? "n/a"
+            `INSERT INTO skills (name, proficiency, type, description, icon, is_active) VALUES ($name, $proficiency, $type, $description, $icon, $is_active)
+            ON conflict do UPDATE set name=$name, proficiency=$proficiency, type=$type, description=$description, icon=$icon, is_active=$is_active`,
+            {
+                $name: task.name,
+                $proficiency: task.proficiency ?? -1,
+                $type: task.type ?? "n/a",
+                $description: task.description ?? "n/a",
+                $icon: task.icon ?? "n/a",
+                $is_active: 1,
+            }
         );
     });
     return new Response(JSON.stringify({ message: "success" }, { headers: { "content-type": "application/json" }, status: 200 }));

@@ -1,21 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function ControlButtons(props) {
+    const [task, setTask] = useState("");
     const api = props.api;
-    const tok = props.tok;
     const handleClick = async () => {
-        const res = fetch(api, {
-            method: "POST",
-            body: JSON.stringify({ task: props.task }),
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: tok,
-            },
-        })
-            .catch((err) => console.error(err))
-            .then(console.log("Success"));
+        const res = props.add(api, task);
         toast.promise(res, {
             pending: `${props.title} Adding...`,
             success: `${props.title} Added`,
@@ -23,16 +14,7 @@ export default function ControlButtons(props) {
         });
     };
     const handleClickDelete = async () => {
-        const res = fetch(api, {
-            method: "DELETE",
-            body: JSON.stringify({ task: { method: "all" } }),
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: tok,
-            },
-        })
-            .catch((err) => console.error(err))
-            .then(console.log("Success"));
+        const res = props.delete(api);
         toast.promise(res, {
             pending: `${props.title} Deleting...`,
             success: `${props.title} Deleted`,
@@ -40,14 +22,29 @@ export default function ControlButtons(props) {
         });
     };
 
+    const taskUpdate = (e) => {
+        // setTask(e.target.value);
+        const info = e.target.value;
+        try {
+            console.log(JSON.parse(info));
+            setTask(JSON.parse(info));
+            toast.success("Valid JSON");
+        } catch (error) {
+            toast.error("Invalid JSON");
+        }
+    };
+
     return (
-        <div className="flex space-x-3 flex-row flex-initial">
-            <button onClick={handleClick} className="flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1">
-                Add All
-            </button>
-            <button onClick={handleClickDelete} className="flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1">
-                Delete All
-            </button>
+        <div className="flex flex-col gap-y-3">
+            <textarea onChange={taskUpdate} className="flex" placeholder="JSON" />
+            <div className="flex gap-x-3 flex-row flex-initial">
+                <button onClick={handleClick} className="flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1">
+                    Add All
+                </button>
+                <button onClick={handleClickDelete} className="flex-1 w-32 bg-slate-200 text-black rounded-md md:py-1">
+                    Delete All
+                </button>
+            </div>
         </div>
     );
 }

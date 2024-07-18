@@ -21,10 +21,14 @@ export async function POST(req) {
                 }
                 try {
                     // Insert into db otherwise update the password
-                    db.run("INSERT INTO users (username, password) VALUES ($user, $pw) ON conflict do UPDATE set username=$user, password=$pw", {
-                        $user: username,
-                        $pw: hash,
-                    });
+                    db.run(
+                        `INSERT INTO users (username, password, is_active) VALUES ($user, $pw, $is_active) ON conflict do UPDATE set username=$user, password=$pw`,
+                        {
+                            $user: username,
+                            $pw: hash,
+                            $is_active: 1,
+                        }
+                    );
                 } catch (error) {
                     return NextResponse.json({ message: "Error adding" }, { status: 400 });
                 }

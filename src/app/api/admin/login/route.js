@@ -17,7 +17,7 @@ export async function POST(req) {
     try {
         if (username && password) {
             try {
-                const hash = await db.get("SELECT password FROM users WHERE username=$user LIMIT 1", {
+                const hash = await db.get("SELECT password FROM users WHERE username=$user AND is_active = 1 LIMIT 1", {
                     $user: username,
                 });
                 if (!hash) {

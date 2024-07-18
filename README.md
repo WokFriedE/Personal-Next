@@ -61,3 +61,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # Items I Want to Look Into
 
 -   [page transitions](https://www.youtube.com/watch?v=fx6KMItwJAw)
+-   [image storage](https://vercel.com/docs/storage/vercel-blob/server-upload)
