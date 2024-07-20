@@ -1,9 +1,9 @@
 import React from "react";
-import languagesJSON from "../../../static/data/languages.json";
-import toolsJSON from "../../../static/data/tools.json";
-import skillsJSON from "../../../static/data/skills.json";
-import extracurricularJSON from "../../../static/data/manual/extracurricular.json";
-import projectJSON from "../../../static/data/manual/projects.json";
+// import languagesJSON from "../../../static/data/languages.json";
+// import toolsJSON from "../../../static/data/tools.json";
+// import skillsJSON from "../../../static/data/skills.json";
+// import extracurricularJSON from "../../../static/data/manual/extracurricular.json";
+// import projectJSON from "../../../static/data/manual/projects.json";
 
 import ControlButtons from "../../../components/controlBtn";
 import SignOut from "../../../components/SignOut";
@@ -12,6 +12,7 @@ import ExtracurricularFormComp from "./ExtracurricularForm";
 import ProjectFormComp from "./ProjectForm";
 import apiService from "../../../../lib/apiHandler";
 import ItemForm from "./ItemForm";
+import AdminDeleteComp from "@/components/AdminDeleteComp";
 
 // TODO fix the controlBtn to use server actions
 
@@ -194,19 +195,20 @@ export default async function adminDataPage() {
                     {/* Langs */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Langs</p>
-                        <ControlButtons title="Language" api="/api/languages" task={languagesJSON} delete={itemDelete} add={itemAdd} />
+                        <ControlButtons title="Language" api="/api/languages" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/languages/" submit={itemSubmit} types={["Language", "Framework", "Library", "Database", "Other"]} />
+                        <AdminDeleteComp data={languages} />
                     </div>
                     {/* Tools */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Tools</p>
-                        <ControlButtons title="Tools" api="/api/tools/" task={toolsJSON} delete={itemDelete} add={itemAdd} />
+                        <ControlButtons title="Tools" api="/api/tools/" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/tools/" submit={itemSubmit} types={["Version Control", "Application", "Operating System", "Other"]} />
                     </div>
                     {/* Skills */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Skills</p>
-                        <ControlButtons title="Skills" api="/api/skills/" task={skillsJSON} delete={itemDelete} add={itemAdd} />
+                        <ControlButtons title="Skills" api="/api/skills/" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="/api/skills/" submit={itemSubmit} />
                     </div>
                 </div>
@@ -214,19 +216,13 @@ export default async function adminDataPage() {
                     {/* Extracurricular */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Extracurricular</p>
-                        <ControlButtons
-                            title="Extracurricular"
-                            api="/api/extracurricular/"
-                            task={extracurricularJSON}
-                            delete={itemDelete}
-                            add={itemAdd}
-                        />
+                        <ControlButtons title="Extracurricular" api="/api/extracurricular/" delete={itemDelete} add={itemAdd} />
                         <ExtracurricularFormComp submit={handleExtraSubmit} />
                     </div>
                     {/* Projects */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Projects</p>
-                        <ControlButtons title="Projects" api="/api/projects/" task={projectJSON} delete={itemDelete} add={itemAdd} />
+                        <ControlButtons title="Projects" api="/api/projects/" delete={itemDelete} add={itemAdd} />
                         <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} />
                     </div>
                 </div>

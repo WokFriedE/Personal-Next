@@ -26,7 +26,6 @@ export default function ControlButtons(props) {
         // setTask(e.target.value);
         const info = e.target.value;
         try {
-            console.log(JSON.parse(info));
             setTask(JSON.parse(info));
             toast.success("Valid JSON");
         } catch (error) {
