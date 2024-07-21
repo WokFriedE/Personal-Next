@@ -10,7 +10,6 @@ import SignOut from "../../../components/SignOut";
 
 import ExtracurricularFormComp from "./ExtracurricularForm";
 import ProjectFormComp from "./ProjectForm";
-import apiService from "../../../../lib/apiHandler";
 import ItemForm from "./ItemForm";
 import AdminDeleteComp from "@/components/AdminDeleteComp";
 import { extracurricularPOST, genericDELETE, genericPOST, languagesGet, projectPOST, toolsGet } from "../../../../lib/dbHandler";
