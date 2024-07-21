@@ -20,8 +20,8 @@ export default async function adminDataPage() {
     const token = process.env.API_TOK;
     const BASE_URL = process.env.BASE_URL;
 
-    const languages = (await languagesGet()).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
-    const tools = (await toolsGet()).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
+    const languages = (await languagesGet(false)).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
+    const tools = (await toolsGet(false)).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
 
     // Generics
     const itemSubmit = async (table, formData) => {
@@ -123,7 +123,18 @@ export default async function adminDataPage() {
     const itemDelete = async (table) => {
         "use server";
         try {
-            await genericDELETE(table)();
+            await genericDELETE(table)("", "toggleAll");
+            return Promise.resolve("Success");
+        } catch (err) {
+            console.error(err);
+            return new Error("Error deleteing all");
+        }
+    };
+    const selectDelete = async (table, title) => {
+        "use server";
+        try {
+            console.log("Deleting", title);
+            await genericDELETE(table)(title, "name", true);
             return Promise.resolve("Success");
         } catch (err) {
             console.error(err);
@@ -143,7 +154,7 @@ export default async function adminDataPage() {
                         <p className="text-xl text-center">Langs</p>
                         <ControlButtons title="Language" api="languages" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="languages" submit={itemSubmit} types={["Language", "Framework", "Library", "Database", "Other"]} />
-                        <AdminDeleteComp data={languages} />
+                        <AdminDeleteComp data={languages} api="languages" delete={selectDelete} />
                     </div>
                     {/* Tools */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">

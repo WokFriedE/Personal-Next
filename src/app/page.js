@@ -2,7 +2,6 @@ import React from "react";
 import ItemContainer from "../components/item_display";
 import sortExtracurricular from "../../lib/sortExtracurricular";
 import ExtracurricularComponent from "../components/ExtracurricularComp";
-import apiService from "../../lib/apiHandler";
 
 import Debugger from "../components/debug";
 import { extracurricularGET, languagesGet, skillsGet, toolsGet } from "../../lib/dbHandler";
