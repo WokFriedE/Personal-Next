@@ -8,7 +8,9 @@ export default function AdminDeleteComp(props) {
             <form>
                 <select>
                     {data.map((item) => (
-                        <option value={item}>{item}</option>
+                        <option value={item} key={`delete_${item.id}`}>
+                            {item}
+                        </option>
                     ))}
                 </select>
                 <button>Delete</button>

@@ -11,7 +11,7 @@ export async function GET(req) {
             driver: sqlite3.Database,
         });
     }
-    const extracurrData = await db.all(`SELECT * FROM extracurricular`);
+    const extracurrData = await db.all(`SELECT * FROM extracurricular WHERE is_active = 1`);
     const posData = await db.all(`SELECT * FROM positions WHERE is_active = 1`);
     // Combines the positions with the extracurricular data
     extracurrData.forEach((extracurr) => {
