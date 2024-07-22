@@ -31,20 +31,20 @@ export default async function adminDataPage() {
     const BASE_URL = process.env.BASE_URL;
 
     const languages = (await languagesGet(false))
-        .map((lang) => ({ title: lang.name, id: lang.id, is_active: lang.is_active }))
-        .sort((a, b) => a.title.localeCompare(b.title));
+        .map((lang) => ({ name: lang.name, id: lang.id, is_active: lang.is_active }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     const tools = (await toolsGet(false))
-        .map((tool) => ({ title: tool.name, id: tool.id, is_active: tool.is_active }))
-        .sort((a, b) => a.title.localeCompare(b.title));
+        .map((tool) => ({ name: tool.name, id: tool.id, is_active: tool.is_active }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     const skills = (await skillsGet(false))
-        .map((item) => ({ title: item.name, id: item.id, is_active: item.is_active }))
-        .sort((a, b) => a.title.localeCompare(b.title));
+        .map((item) => ({ name: item.name, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     const extracurriculars = (await extracurricularGET(false))
-        .map((item) => ({ title: item.name, id: item.id, is_active: item.is_active }))
-        .sort((a, b) => a.title.localeCompare(b.title));
+        .map((item) => ({ name: item.name, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.name.localeCompare(b.name));
     const projects = (await projectGET(false))
-        .map((item) => ({ title: item.title, id: item.id, is_active: item.is_active }))
-        .sort((a, b) => a.title.localeCompare(b.title));
+        .map((item) => ({ name: item.title, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     // Generics
     const itemSubmit = async (table, formData) => {
@@ -176,7 +176,12 @@ export default async function adminDataPage() {
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Langs</p>
                         <ControlButtons title="Language" api="languages" delete={itemDelete} add={itemAdd} />
-                        <ItemForm api="languages" submit={itemSubmit} types={["Language", "Framework", "Library", "Database", "Other"]} />
+                        <ItemForm
+                            api="languages"
+                            submit={itemSubmit}
+                            types={["Language", "Framework", "Library", "Database", "Other"]}
+                            data={languages}
+                        />
                         <AdminDeleteComp data={languages} api="languages" delete={selectDelete} />
                     </div>
                     {/* Tools */}

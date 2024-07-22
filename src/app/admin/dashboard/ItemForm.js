@@ -4,9 +4,11 @@ import { toast } from "react-toastify";
 
 export default function ItemForm(props) {
     const handleSubmit = props.submit.bind(null, props.api);
+    const [selectedItem, setSelectedItem] = useState({});
     const types = props.types ?? ["n/a"];
-
+    const propsData = props.data ?? [];
     const [pending, setPending] = useState(false);
+
     const handleSubmitAPI = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
@@ -26,12 +28,27 @@ export default function ItemForm(props) {
             });
     };
 
+    const handleUpdateItem = (event) => {
+        if (event.target.value === "") return;
+        setSelectedItem(propsData[event.target.value]);
+    };
+
     return (
-        <form className="grid grid-cols-1" onSubmit={handleSubmitAPI}>
+        <form className="grid grid-cols-1 py-2" onSubmit={handleSubmitAPI}>
+            <select className="bg-gray-400" onSubmit={handleUpdateItem}>
+                <option value={""}>New Item</option>
+                {propsData.map((item) => (
+                    <option value={item.name} key={`${props.api}_obtain_${item.name}`}>
+                        {console.log(item)}
+                        {item.name}
+                    </option>
+                ))}
+            </select>
             <label className="text-slate-50" htmlFor="name">
                 Name*
             </label>
-            <input autoComplete="off" type="text" placeholder="Language" name="name" required />
+            {console.log(selectedItem.name)}
+            <input autoComplete="off" type="text" placeholder="Language" name="name" required defaultValue={selectedItem.name ?? ""} />
             <label className="text-slate-50" htmlFor="proficiency">
                 Proficiency
             </label>
