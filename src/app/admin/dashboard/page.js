@@ -12,7 +12,17 @@ import ExtracurricularFormComp from "./ExtracurricularForm";
 import ProjectFormComp from "./ProjectForm";
 import ItemForm from "./ItemForm";
 import AdminDeleteComp from "@/components/AdminDeleteComp";
-import { extracurricularPOST, genericDELETE, genericPOST, languagesGet, projectPOST, toolsGet } from "../../../../lib/dbHandler";
+import {
+    extracurricularGET,
+    extracurricularPOST,
+    genericDELETE,
+    genericPOST,
+    languagesGet,
+    projectGET,
+    projectPOST,
+    skillsGet,
+    toolsGet,
+} from "../../../../lib/dbHandler";
 
 // TODO fix the controlBtn to use server actions
 
@@ -20,8 +30,21 @@ export default async function adminDataPage() {
     const token = process.env.API_TOK;
     const BASE_URL = process.env.BASE_URL;
 
-    const languages = (await languagesGet(false)).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
-    const tools = (await toolsGet(false)).map((lang) => ({ title: lang.name, id: lang.id })).sort((a, b) => a.title.localeCompare(b.title));
+    const languages = (await languagesGet(false))
+        .map((lang) => ({ title: lang.name, id: lang.id, is_active: lang.is_active }))
+        .sort((a, b) => a.title.localeCompare(b.title));
+    const tools = (await toolsGet(false))
+        .map((tool) => ({ title: tool.name, id: tool.id, is_active: tool.is_active }))
+        .sort((a, b) => a.title.localeCompare(b.title));
+    const skills = (await skillsGet(false))
+        .map((item) => ({ title: item.name, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.title.localeCompare(b.title));
+    const extracurriculars = (await extracurricularGET(false))
+        .map((item) => ({ title: item.name, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.title.localeCompare(b.title));
+    const projects = (await projectGET(false))
+        .map((item) => ({ title: item.title, id: item.id, is_active: item.is_active }))
+        .sort((a, b) => a.title.localeCompare(b.title));
 
     // Generics
     const itemSubmit = async (table, formData) => {
@@ -161,12 +184,14 @@ export default async function adminDataPage() {
                         <p className="text-xl text-center">Tools</p>
                         <ControlButtons title="Tools" api="tools" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="tools" submit={itemSubmit} types={["Version Control", "Application", "Operating System", "Other"]} />
+                        <AdminDeleteComp data={tools} api="tools" delete={selectDelete} />
                     </div>
                     {/* Skills */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Skills</p>
                         <ControlButtons title="Skills" api="skills" delete={itemDelete} add={itemAdd} />
                         <ItemForm api="skills" submit={itemSubmit} />
+                        <AdminDeleteComp data={skills} api="skills" delete={selectDelete} />
                     </div>
                 </div>
                 <div className="flex flex-row gap-x-3 gap-y-3">
@@ -175,12 +200,14 @@ export default async function adminDataPage() {
                         <p className="text-xl text-center">Extracurricular</p>
                         <ControlButtons title="Extracurricular" api="extracurricular" delete={itemDelete} add={itemAdd} />
                         <ExtracurricularFormComp submit={handleExtraSubmit} />
+                        <AdminDeleteComp data={extracurriculars} api="extracurriculars" delete={selectDelete} />
                     </div>
                     {/* Projects */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Projects</p>
                         <ControlButtons title="Projects" api="projects" delete={itemDelete} add={itemAdd} />
                         <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} />
+                        <AdminDeleteComp data={projects} api="projects" delete={selectDelete} />
                     </div>
                 </div>
             </div>

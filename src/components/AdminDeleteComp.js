@@ -2,12 +2,19 @@
 import React, { useState } from "react";
 
 export default function AdminDeleteComp(props) {
-    const data = props.data.map((item) => ({ title: item.name ?? item.title, id: item.id, is_active: item.is_active }));
+    const [data, setData] = useState(props.data.map((item) => ({ title: item.name ?? item.title, id: item.id, is_active: item.is_active })));
     const [selectedDelete, setSelectedDelete] = useState(data[0] ?? "");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const res = await props.delete(props.api, selectedDelete);
+        await props.delete(props.api, selectedDelete).then(() => {
+            setData(
+                data.map((item) => {
+                    if (item.title === selectedDelete) item.is_active = !item.is_active;
+                    return item;
+                })
+            );
+        });
     };
 
     const handleChange = (event) => {
@@ -15,13 +22,13 @@ export default function AdminDeleteComp(props) {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="px-auto flex justify-center">
+            <form onSubmit={handleSubmit} className="gap-x-2 flex my-2">
                 <select onChange={handleChange} value={selectedDelete}>
                     {data.map((item) => (
                         <option value={item.title} key={`delete_${item.id}`}>
                             {item.title}
-                            {item.is_active ? "" : "*"}
+                            {!item.is_active ? "*" : ""}
                         </option>
                     ))}
                 </select>

@@ -36,11 +36,13 @@ export default async function Home() {
                     </div>
                 </div>
                 {/* Extracurricular */}
-                {extraJSON.length > 0 && (
+                {extraJSON.length !== 0 ? (
                     <>
                         <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">ExtracurricularS</h1>
                         <ExtracurricularComponent data={extraJSON} />
                     </>
+                ) : (
+                    <></>
                 )}
             </div>
         );
