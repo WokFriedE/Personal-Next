@@ -1,9 +1,9 @@
 import React from "react";
-import apiHandler from "../../../../lib/apiHandler.js";
 import { Icon } from "@iconify/react";
+import { projectGET } from "../../../../lib/dbHandler";
 
 async function TechPage() {
-    const projectData = await apiHandler.fetchProjectsData();
+    const projectData = await projectGET();
 
     return (
         <div className="flex min-h-max flex-col justify-center items-center">

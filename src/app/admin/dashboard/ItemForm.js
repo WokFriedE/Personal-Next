@@ -15,9 +15,9 @@ export default function ItemForm(props) {
             .then(() => {
                 setPending(false);
                 toast.promise(res, {
-                    pending: "Project | Adding...",
-                    success: "Project | Added",
-                    error: "Project | Error",
+                    pending: `${props.api} | Adding...`,
+                    success: `${props.api} | Added`,
+                    error: `${props.api} | Error`,
                 });
             })
             .catch((err) => {

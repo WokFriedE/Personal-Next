@@ -2,18 +2,18 @@ import React from "react";
 import ItemContainer from "../components/item_display";
 import sortExtracurricular from "../../lib/sortExtracurricular";
 import ExtracurricularComponent from "../components/ExtracurricularComp";
-import apiService from "../../lib/apiHandler";
 
 import Debugger from "../components/debug";
+import { extracurricularGET, languagesGet, skillsGet, toolsGet } from "../../lib/dbHandler";
 // TODO Change the icons to b/w?
 // TODO add a work experience section and a courses section
 
 export default async function Home() {
     try {
-        let languagesJSON = await apiService.fetchLangData(),
-            skillsJSON = await apiService.fetchSkillsData(),
-            toolsJSON = await apiService.fetchToolsData(),
-            extraJSON = sortExtracurricular(await apiService.fetchExtracurricularData());
+        let languagesJSON = await languagesGet(),
+            skillsJSON = await skillsGet(),
+            toolsJSON = await toolsGet(),
+            extraJSON = sortExtracurricular(await extracurricularGET());
 
         return (
             <div className="flex min-h-screen flex-col">
@@ -26,14 +26,22 @@ export default async function Home() {
                 <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">Skills</h1>
                 <div className="2xl:mx-32 sm:mx-12 mx-1 bg-slate-600/[.2] rounded-lg border-2 border-gray-500">
                     <div className=" grid md:grid-cols-3 md:divide-x-2 sm:grid-cols-1 md:divide-y-0 divide-solid divide-y-2 divide-gray-500">
-                        <ItemContainer item={languagesJSON} title="Technologies" icon="heroicons-outline:code" />
-                        <ItemContainer item={skillsJSON} title="Skills" icon="heroicons-outline:user" />
-                        <ItemContainer item={toolsJSON} title="Tools" icon="heroicons-outline:computer-desktop" />
+                        {languagesJSON.length !== 0 ? (
+                            <ItemContainer item={languagesJSON} title="Technologies" icon="heroicons-outline:code" />
+                        ) : (
+                            <></>
+                        )}
+                        {skillsJSON.length !== 0 ? <ItemContainer item={skillsJSON} title="Skills" icon="heroicons-outline:user" /> : <></>}
+                        {toolsJSON.length !== 0 ? <ItemContainer item={toolsJSON} title="Tools" icon="heroicons-outline:computer-desktop" /> : <></>}
                     </div>
                 </div>
                 {/* Extracurricular */}
-                <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">ExtracurricularS</h1>
-                <ExtracurricularComponent data={extraJSON} />
+                {extraJSON.length > 0 && (
+                    <>
+                        <h1 className="2xl:mx-32 sm:mx-12 mx-1 text-3xl mt-5 py-1 px-auto font-bold uppercase">ExtracurricularS</h1>
+                        <ExtracurricularComponent data={extraJSON} />
+                    </>
+                )}
             </div>
         );
     } catch (error) {
