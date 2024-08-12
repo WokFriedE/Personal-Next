@@ -27,7 +27,7 @@ export default function AdminDeleteComp(props) {
                 <select onChange={handleChange} value={selectedDelete}>
                     {data.map((item) => (
                         <option value={item.name} key={`delete_${item.id}`}>
-                            {item.title}
+                            {item.name}
                             {!item.is_active ? "*" : ""}
                         </option>
                     ))}

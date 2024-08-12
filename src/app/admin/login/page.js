@@ -4,6 +4,8 @@ import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 import { getAccessCookie } from "../../../../lib/handleCookie";
+// import { loginPOST } from "../../../../lib/dbHandler";
+import { handleLogin as handleLoginLocal } from "../../../../lib/handleCookie";
 
 export default function loginAdmin() {
     const [visible, setVisible] = useState(false);
@@ -22,22 +24,12 @@ export default function loginAdmin() {
         const user = e.target.username.value;
         const pass = e.target.password.value;
 
-        const res = fetch("/api/admin/login", {
-            method: "POST",
-            body: JSON.stringify({ username: user ?? "null", password: pass ?? "null" }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-
-        await res.then(async (res) => {
-            if (res.ok) {
-                toast.success("Logged in");
-                setAccess(true);
-            } else {
-                toast.warning("Invalid");
-            }
-        });
+        if (handleLoginLocal(user, pass)) {
+            toast.success("Logged in");
+            setAccess(true);
+        } else {
+            toast.warning("Invalid");
+        }
     };
 
     const getCookie = async () => {

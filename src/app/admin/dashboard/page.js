@@ -31,19 +31,46 @@ export default async function adminDataPage() {
     const BASE_URL = process.env.BASE_URL;
 
     const languages = (await languagesGet(false))
-        .map((lang) => ({ name: lang.name, id: lang.id, is_active: lang.is_active }))
+        .map((lang) => ({
+            name: lang.name,
+            id: lang.id,
+            is_active: lang.is_active,
+            description: lang.description,
+            proficiency: lang.proficiency,
+            type: lang.type,
+            icon: lang.icon,
+        }))
         .sort((a, b) => a.name.localeCompare(b.name));
     const tools = (await toolsGet(false))
-        .map((tool) => ({ name: tool.name, id: tool.id, is_active: tool.is_active }))
+        .map((tool) => ({
+            name: tool.name,
+            id: tool.id,
+            is_active: tool.is_active,
+            description: tool.description,
+            proficiency: tool.proficiency,
+            type: tool.type,
+            icon: tool.icon,
+        }))
         .sort((a, b) => a.name.localeCompare(b.name));
     const skills = (await skillsGet(false))
-        .map((item) => ({ name: item.name, id: item.id, is_active: item.is_active }))
+        .map((item) => ({
+            name: item.name,
+            id: item.id,
+            is_active: item.is_active,
+            description: item.description,
+            proficiency: item.proficiency,
+            type: item.type,
+            icon: item.icon,
+        }))
         .sort((a, b) => a.name.localeCompare(b.name));
     const extracurriculars = (await extracurricularGET(false))
-        .map((item) => ({ name: item.name, id: item.id, is_active: item.is_active }))
+        .map((item) => ({ name: item.name, id: item.id, is_active: item.is_active, description: item.description, positions: item.positions }))
         .sort((a, b) => a.name.localeCompare(b.name));
     const projects = (await projectGET(false))
-        .map((item) => ({ name: item.title, id: item.id, is_active: item.is_active }))
+        .map((item) => ({
+            ...item,
+            name: item.title,
+        }))
         .sort((a, b) => a.name.localeCompare(b.name));
 
     // Generics
@@ -188,14 +215,19 @@ export default async function adminDataPage() {
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Tools</p>
                         <ControlButtons title="Tools" api="tools" delete={itemDelete} add={itemAdd} />
-                        <ItemForm api="tools" submit={itemSubmit} types={["Version Control", "Application", "Operating System", "Other"]} />
+                        <ItemForm
+                            api="tools"
+                            submit={itemSubmit}
+                            types={["Version Control", "Application", "Operating System", "Other"]}
+                            data={tools}
+                        />
                         <AdminDeleteComp data={tools} api="tools" delete={selectDelete} />
                     </div>
                     {/* Skills */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Skills</p>
                         <ControlButtons title="Skills" api="skills" delete={itemDelete} add={itemAdd} />
-                        <ItemForm api="skills" submit={itemSubmit} />
+                        <ItemForm api="skills" submit={itemSubmit} data={skills} />
                         <AdminDeleteComp data={skills} api="skills" delete={selectDelete} />
                     </div>
                 </div>
@@ -204,14 +236,14 @@ export default async function adminDataPage() {
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Extracurricular</p>
                         <ControlButtons title="Extracurricular" api="extracurricular" delete={itemDelete} add={itemAdd} />
-                        <ExtracurricularFormComp submit={handleExtraSubmit} />
+                        <ExtracurricularFormComp submit={handleExtraSubmit} data={extracurriculars} />
                         <AdminDeleteComp data={extracurriculars} api="extracurriculars" delete={selectDelete} />
                     </div>
                     {/* Projects */}
                     <div className="flex flex-col flex-1 bg-slate-600 px-2 rounded-md py-2 divide-y gap-y-2">
                         <p className="text-xl text-center">Projects</p>
                         <ControlButtons title="Projects" api="projects" delete={itemDelete} add={itemAdd} />
-                        <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} />
+                        <ProjectFormComp languages={languages} tools={tools} submit={handleProjectSubmit} data={projects} />
                         <AdminDeleteComp data={projects} api="projects" delete={selectDelete} />
                     </div>
                 </div>

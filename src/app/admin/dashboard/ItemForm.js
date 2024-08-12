@@ -4,7 +4,12 @@ import { toast } from "react-toastify";
 
 export default function ItemForm(props) {
     const handleSubmit = props.submit.bind(null, props.api);
-    const [selectedItem, setSelectedItem] = useState({});
+    const [selectedItem, setSelectedItem] = useState({
+        name: "",
+        id: -1,
+        is_active: 0,
+        icon: "vscode-icons:default-file",
+    });
     const types = props.types ?? ["n/a"];
     const propsData = props.data ?? [];
     const [pending, setPending] = useState(false);
@@ -29,17 +34,21 @@ export default function ItemForm(props) {
     };
 
     const handleUpdateItem = (event) => {
-        if (event.target.value === "") return;
-        setSelectedItem(propsData[event.target.value]);
+        if (event.target.value === "") {
+            setSelectedItem({ name: "", id: -1, is_active: 0 });
+            return;
+        }
+        setSelectedItem(propsData.find((item) => item.name === event.target.value));
+        console.log(selectedItem, propsData[event.target.value]);
     };
+    // TODO update the form when updating the item
 
     return (
         <form className="grid grid-cols-1 py-2" onSubmit={handleSubmitAPI}>
-            <select className="bg-gray-400" onSubmit={handleUpdateItem}>
+            <select className="bg-gray-400" onChange={handleUpdateItem}>
                 <option value={""}>New Item</option>
                 {propsData.map((item) => (
                     <option value={item.name} key={`${props.api}_obtain_${item.name}`}>
-                        {console.log(item)}
                         {item.name}
                     </option>
                 ))}
@@ -47,16 +56,15 @@ export default function ItemForm(props) {
             <label className="text-slate-50" htmlFor="name">
                 Name*
             </label>
-            {console.log(selectedItem.name)}
             <input autoComplete="off" type="text" placeholder="Language" name="name" required defaultValue={selectedItem.name ?? ""} />
             <label className="text-slate-50" htmlFor="proficiency">
                 Proficiency
             </label>
-            <input autoComplete="off" type="number" placeholder="Proficiency" name="proficiency" />
+            <input autoComplete="off" type="number" placeholder="Proficiency" name="proficiency" defaultValue={selectedItem.proficiency ?? ""} />
             <label className="text-slate-50" htmlFor="type">
                 Type*
             </label>
-            <select name="type" placeholder="Type" required>
+            <select name="type" placeholder="Type" required defaultValue={selectedItem.type ?? types[0]}>
                 {types.map((type) => (
                     <option value={type} key={`menu_${type}`}>
                         {type}
@@ -66,11 +74,11 @@ export default function ItemForm(props) {
             <label className="text-slate-50" htmlFor="icon" required>
                 Icon*
             </label>
-            <input autoComplete="off" type="text" name="icon" placeholder="Icon" defaultValue={"vscode-icons:default-file"} />
+            <input autoComplete="off" type="text" name="icon" placeholder="Icon" defaultValue={selectedItem.icon ?? "vscode-icons:default-file"} />
             <label className="text-slate-50" htmlFor="description">
                 Description
             </label>
-            <textarea name="description" placeholder="Description" />
+            <textarea name="description" placeholder="Description" defaultValue={selectedItem.description ?? ""} />
             <fieldset className="flex flex-row px-3 gap-x-3">
                 <button type="submit" className="basicBtn mt-2 mx-auto" disabled={pending}>
                     {pending ? "Adding..." : "Add Item"}

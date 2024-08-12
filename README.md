@@ -63,7 +63,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 -   [page transitions](https://www.youtube.com/watch?v=fx6KMItwJAw)
 -   [image storage](https://vercel.com/docs/storage/vercel-blob/server-upload)
 
+# Todo in the future
+
+[ ] Make a shortcuts page where people can suggest keyboard shortcuts / language tips [ ] Make an API endpoint for it
+
 # Concepts I Learned
 
 -   You can use server actions (which are like server functions) in forms and as async functions on the client side
     -   This is useful for maintaining env security and reducing client side loads
+-   Vercel prefers / suggests that NextJS should not have built in api routes as it needs to exit the network to just come back --> it is more efficient to code direct interactions
