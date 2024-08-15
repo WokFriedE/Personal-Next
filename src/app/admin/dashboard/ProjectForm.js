@@ -122,9 +122,8 @@ export default function ProjectFormComp(props) {
                     className="text-slate-50"
                     defaultValue={selectedItem?.imgSrc ?? null}
                 />
-                {console.log(selectedTools, selectedLangs)}
                 <label htmlFor="tools">Tools</label>
-                <select name="tools" form="project" multiple value={selectedTools} onChange={handleToolsSelect}>
+                <select name="tools" form="project" multiple value={selectedTools ?? []} onChange={handleToolsSelect}>
                     {/*defaultValue= {selectedTools ?? null}>*/}
                     {props.tools.map((tool) => (
                         <option key={tool.id} value={tool.id}>
@@ -137,7 +136,7 @@ export default function ProjectFormComp(props) {
                 </button>
 
                 <label htmlFor="languages">Languages</label>
-                <select name="languages" form="project" multiple value={selectedLangs} onChange={handleLangsSelect}>
+                <select name="languages" form="project" multiple value={selectedLangs ?? []} onChange={handleLangsSelect}>
                     {/* defaultValue={selectedLangs ?? null}> */}
                     {props.languages.map((lang) => (
                         <option key={lang.id} value={lang.id}>

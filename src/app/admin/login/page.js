@@ -45,20 +45,20 @@ export default function loginAdmin() {
     return (
         <div className="flex flex-col justify-center items-center">
             <h1 className="text-3xl">Login</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-y-2">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-y-2" id="loginForm">
                 <label className="text-xl">Username</label>
                 <input className="text-slate-950" type="text" name="username" autoComplete="username" />
                 <label className="text-xl">Password</label>
                 <input className="text-slate-950" type={visible ? "text" : "password"} name="password" autoComplete="current-password" />
-                <span className="flex flex-row">
-                    <button type="button" onClick={handleVisibility} className="ml-2 h-auto">
-                        <Icon icon={visible ? "material-symbols:visibility" : "material-symbols:visibility-off"} />
-                    </button>
-                </span>
-                <button type="submit" className="text-xl bg-slate-600 rounded-sm">
+            </form>
+            <button type="button" onClick={handleVisibility} className="ml-2 h-auto mb-2 mt-1">
+                <Icon icon={visible ? "material-symbols:visibility" : "material-symbols:visibility-off"} onClick={handleVisibility} />
+            </button>
+            <fieldset form="loginForm">
+                <button type="submit" className="text-xl bg-slate-600 rounded-sm px-8 py-1" form="loginForm">
                     Submit
                 </button>
-            </form>
+            </fieldset>
         </div>
     );
 }
