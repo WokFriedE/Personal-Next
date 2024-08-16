@@ -73,7 +73,7 @@ async function TechPage() {
                             </div>
                             {/* Right side */}
                             <div className="flex-1 flex justify-center">
-                                <img src={project.imgSrc} alt={project.title} className="lg:h-64 lg:min-w-96 border border-gray-500" />
+                                <img src={project.imgSrc} alt={project.title} className="lg:h-64 lg:max-w-[70%] border border-gray-500" />
                             </div>
                         </div>
                     </div>

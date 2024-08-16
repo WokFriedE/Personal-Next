@@ -8,8 +8,8 @@ export default function ProjectFormComp(props) {
     const [features, setFeatures] = useState(1);
 
     const [selectedItem, setSelectedItem] = useState(null);
-    const [selectedTools, setSelectedTools] = useState(null);
-    const [selectedLangs, setSelectedLangs] = useState(null);
+    const [selectedTools, setSelectedTools] = useState([]);
+    const [selectedLangs, setSelectedLangs] = useState([]);
     const data = props.data ?? [];
 
     const handleSubmitAPI = async (event) => {
@@ -47,14 +47,12 @@ export default function ProjectFormComp(props) {
 
     const handleToolsSelect = (event) => {
         const selected = parseInt(event.target.value);
-        if (!selectedTools) return;
         if (selectedTools && selectedTools.includes(selected)) setSelectedTools(selectedTools.filter((tool) => tool !== selected));
         else setSelectedTools([...selectedTools, selected]);
     };
 
     const handleLangsSelect = (event) => {
         const selected = parseInt(event.target.value);
-        if (!selectedLangs) return;
         if (selectedLangs && selectedLangs.includes(selected)) setSelectedLangs(selectedLangs.filter((lang) => lang !== selected));
         else setSelectedLangs([...selectedLangs, selected]);
     };
@@ -116,12 +114,13 @@ export default function ProjectFormComp(props) {
                 <label htmlFor="img">Image</label>
                 <input
                     type="file"
-                    name="img"
+                    name="imgFile"
                     placeholder="Image"
                     accept=".png,.jpg,.webp,.gif"
                     className="text-slate-50"
                     defaultValue={selectedItem?.imgSrc ?? null}
                 />
+                <input type="text" name="img" placeholder="Image" className="text-slate-950" defaultValue={selectedItem?.imgSrc ?? null} />
                 <label htmlFor="tools">Tools</label>
                 <select name="tools" form="project" multiple value={selectedTools ?? []} onChange={handleToolsSelect}>
                     {/*defaultValue= {selectedTools ?? null}>*/}

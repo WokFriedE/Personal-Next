@@ -127,7 +127,6 @@ export default async function adminDataPage() {
     // Individual submit
     const handleProjectSubmit = async (formData) => {
         "use server";
-
         // Process image
         const img = formData.get("img");
 
@@ -142,7 +141,7 @@ export default async function adminDataPage() {
             start: formData.get("start"),
             end: formData.get("end"),
             description: formData.get("description"),
-            imgSrc: "/images/1332803.png",
+            imgSrc: formData.get("img") ?? "/images/1332803.png",
             link: formData.get("link"),
             github: formData.get("github"),
             videoSrc: formData.get("video"),
@@ -150,6 +149,7 @@ export default async function adminDataPage() {
             features: feats,
         };
 
+        console.log(output);
         try {
             await projectPOST(output);
             return Promise.resolve("Success");
@@ -184,7 +184,7 @@ export default async function adminDataPage() {
         "use server";
         try {
             console.log("Deleting", title);
-            await genericDELETE(table)(title, "name", true);
+            await genericDELETE(table)(title, "name", false);
             return Promise.resolve("Success");
         } catch (err) {
             console.error(err);
