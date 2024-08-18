@@ -39,7 +39,6 @@ export default function ItemForm(props) {
             return;
         }
         setSelectedItem(propsData.find((item) => item.name === event.target.value));
-        console.log(selectedItem, propsData[event.target.value]);
     };
     // TODO update the form when updating the item
 

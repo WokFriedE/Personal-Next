@@ -10,7 +10,7 @@ export default function AdminDeleteComp(props) {
         await props.delete(props.api, selectedDelete).then(() => {
             setData(
                 data.map((item) => {
-                    if (item.title === selectedDelete) item.is_active = !item.is_active;
+                    if (item.id === selectedDelete) item.is_active = !item.is_active;
                     return item;
                 })
             );
@@ -19,6 +19,7 @@ export default function AdminDeleteComp(props) {
 
     const handleChange = (event) => {
         setSelectedDelete(event.target.value);
+        console.log(selectedDelete);
     };
 
     return (
@@ -26,7 +27,7 @@ export default function AdminDeleteComp(props) {
             <form onSubmit={handleSubmit} className="gap-x-2 flex my-2">
                 <select onChange={handleChange} value={selectedDelete}>
                     {data.map((item) => (
-                        <option value={item.name} key={`delete_${item.id}`}>
+                        <option value={item.id} key={`delete_${item.id}`}>
                             {item.name}
                             {!item.is_active ? "*" : ""}
                         </option>

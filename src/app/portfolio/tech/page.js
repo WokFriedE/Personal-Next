@@ -10,6 +10,7 @@ async function TechPage() {
             {/* Each Project */}
             {projectData.map((project, i) => (
                 <div className={"py-5 w-screen " + (i % 2 === 0 && "bg-slate-800")} key={`project_${i}`}>
+                    {console.log(project)}
                     <div className={"mx-10 lg:mx-20"}>
                         <h2 className="text-3xl text-center">{project.title}</h2>
                         {/* Info */}

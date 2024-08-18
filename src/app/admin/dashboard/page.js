@@ -20,6 +20,7 @@ import {
     languagesGet,
     projectGET,
     projectPOST,
+    projectUPDATE,
     skillsGet,
     toolsGet,
 } from "../../../../lib/dbHandler";
@@ -149,9 +150,9 @@ export default async function adminDataPage() {
             features: feats,
         };
 
-        console.log(output);
         try {
-            await projectPOST(output);
+            if (formData.get("id")) await projectUPDATE(output, parseInt(formData.get("id")));
+            else await projectPOST(output);
             return Promise.resolve("Success");
         } catch (err) {
             console.error(err);
@@ -184,7 +185,7 @@ export default async function adminDataPage() {
         "use server";
         try {
             console.log("Deleting", title);
-            await genericDELETE(table)(title, "name", false);
+            await genericDELETE(table)(title, "name", true);
             return Promise.resolve("Success");
         } catch (err) {
             console.error(err);

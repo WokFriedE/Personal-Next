@@ -15,6 +15,9 @@ export default function ProjectFormComp(props) {
     const handleSubmitAPI = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
+        if (selectedItem) {
+            formData.append("id", selectedItem.id);
+        }
         setPending(true);
         const res = handleSubmit(formData)
             .then(() => {
@@ -67,8 +70,8 @@ export default function ProjectFormComp(props) {
         const sLangs = [];
 
         selectedItem.tech.forEach((tech) => {
-            if (props.tools.map((tool) => tool.name).includes(tech.name)) sTools.push(tech.id);
-            else sLangs.push(tech.id);
+            if (props.tools.map((tool) => tool.name).includes(tech.name)) sTools.push(tech.tool_id);
+            else sLangs.push(tech.tool_id);
         });
 
         setSelectedTools(sTools);
@@ -85,7 +88,6 @@ export default function ProjectFormComp(props) {
                     </option>
                 ))}
             </select>
-
             <form className="grid grid-cols-1" id="project" onSubmit={handleSubmitAPI}>
                 <label htmlFor="name">Name*</label>
                 <input autoComplete="off" type="text" placeholder="Project" name="title" required defaultValue={selectedItem?.name ?? null} />
@@ -94,7 +96,7 @@ export default function ProjectFormComp(props) {
                 <input type="url" name="link" placeholder="Link" defaultValue={selectedItem?.link ?? null} />
 
                 <label htmlFor="github">Github</label>
-                <input type="url" name="Github" placeholder="Github" defaultValue={selectedItem?.github ?? null} />
+                <input type="url" name="github" placeholder="Github" defaultValue={selectedItem?.github ?? null} />
 
                 <label htmlFor="video">Video</label>
                 <input type="url" name="video" placeholder="video" defaultValue={selectedItem?.videoSrc ?? null} />
@@ -121,6 +123,7 @@ export default function ProjectFormComp(props) {
                     defaultValue={selectedItem?.imgSrc ?? null}
                 />
                 <input type="text" name="img" placeholder="Image" className="text-slate-950" defaultValue={selectedItem?.imgSrc ?? null} />
+                <p className="text-slate-100 italic">{selectedItem?.tech.map((item) => `${item.name}, `)}</p>
                 <label htmlFor="tools">Tools</label>
                 <select name="tools" form="project" multiple value={selectedTools ?? []} onChange={handleToolsSelect}>
                     {/*defaultValue= {selectedTools ?? null}>*/}
