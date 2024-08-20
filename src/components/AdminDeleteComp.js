@@ -19,7 +19,7 @@ export default function AdminDeleteComp(props) {
 
     const handleChange = (event) => {
         setSelectedDelete(event.target.value);
-        console.log(selectedDelete);
+        // console.log(selectedDelete);
     };
 
     return (

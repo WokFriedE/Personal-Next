@@ -50,7 +50,7 @@ export default function ExtracurricularFormComp(props) {
             setPositions(1);
             return;
         }
-        console.log(selectedItem);
+        // console.log(selectedItem);
         setPositions(selectedItem.positions.length > 0 ? selectedItem.positions.length : 1);
     }, [selectedItem]);
 
