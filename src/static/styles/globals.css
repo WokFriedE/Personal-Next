@@ -11,11 +11,25 @@
     scrollbar-color: rgb(82 82 82) rgb(212 212 212);
 }
 
+@media (prefers-color-scheme: light) {
+    html {
+        color-scheme: dark;
+    }
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 27, 38, 44;
+        --background-end-rgb: 5, 11, 16;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --foreground-rgb: 255, 255, 255;
         --background-start-rgb: 27, 38, 44;
         --background-end-rgb: 5, 11, 16;
+    }
+    html {
+        color-scheme: dark;
     }
 }
 
