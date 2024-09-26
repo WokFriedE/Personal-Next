@@ -13,7 +13,7 @@ async function TechPage() {
                     <div className={"mx-10 lg:mx-20"}>
                         <h2 className="text-3xl text-center">{project.title}</h2>
                         {/* Info */}
-                        <div className="flex flex-row flex-wrap my-2 gap-x-10 items-center gap-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 my-2 gap-x-10 items-center gap-y-4">
                             {/* Left Side */}
                             <div className="flex flex-col flex-1 text-left gap-y-2">
                                 {/* Desc */}
@@ -23,14 +23,14 @@ async function TechPage() {
                                     <p>Features:</p>
                                     <ul className="items-center justify-center ml-5 list-disc">
                                         {project.features.map((item) => (
-                                            <li key={`feat_${item.id}`} className="text-left">
+                                            <li key={`feat_${item.id}`} className="text-wrap">
                                                 {item.feature}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
                                 {/* Chips */}
-                                <div className="flex flex-row justify-center">
+                                <div className="flex flex-row justify-center flex-wrap">
                                     {project.tech.map((item) => (
                                         <div className="flex flex-wrap items-center justify-center" key={item.name}>
                                             <div className="flex flex-initial sm:my-2 px-4 py-0.5 m-1 rounded-full items-center gap-x-2 bg-neutral-900 border border-neutral-500">
